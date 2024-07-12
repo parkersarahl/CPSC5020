@@ -1,0 +1,16 @@
+//Takes two digits entered by user, multiplies them and saves the  //output.
+
+//@R0 = user input
+//@R1 = user input
+
+//@R2= product of R1 x R2
+
+//@i = index for loop
+
+(Loop) //Loop will add R0 to R2 for R1 times. Will Stop when i = R1.
+for (i=0, i < R2, i++)
+  R2 = R2 + R0
+  i = i +1
+
+(End)
+
