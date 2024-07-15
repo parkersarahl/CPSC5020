@@ -3,8 +3,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.regex.*;
-
 
 public class parser {
 
@@ -18,14 +16,16 @@ public class parser {
 
         try {
             BufferedReader br =  new BufferedReader(new FileReader(path));
-                String text;
-                line = br.readLine();
-                text = line;
-                while(!text.matches("(?m)^\\.*", "a"); 
-                //&& (line = br.readLine()) != null)
+   
+            while((line = br.readLine()) != null)
                 {
-                    data.add(text);
-                }
+                line = line.replace(" ", "");
+                    if (!line.matches("[//].*"))
+                    {
+                        data.add(line);
+                    }
+                    }
+                       
             }
 
         catch (FileNotFoundException e)
