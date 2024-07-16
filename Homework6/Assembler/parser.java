@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class parser {
 
@@ -23,9 +24,10 @@ public class parser {
                     if (!line.matches("[//].*"))
                     {
                         data.add(line);
+                        data.removeAll(Arrays.asList("", null));
                     }
                     }
-                       
+            br.close();
             }
 
         catch (FileNotFoundException e)
@@ -37,6 +39,23 @@ public class parser {
         e.printStackTrace();
      }
     }
+
+    public void save_data()
+    {
+        for (int i = 0; i < data.size(); i++)
+        {
+            if (data.get(i).matches("[@].*"))
+            {
+                String num = (data.get(i));
+                String numSubString = num.substring(1, num.length());
+                int number = Integer.parseInt(numSubString);
+                String binary_number = Integer.toBinaryString(number);
+                data.set(i, binary_number);
+                System.out.println(data.get(i));
+            }
+        }  
+    }
+   
 
     //print out data file
     public void ShowData()
