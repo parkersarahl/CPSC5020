@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.print.DocFlavor.STRING;
+
 public class parser {
 
     private ArrayList<String> data = new ArrayList<String>();
@@ -38,6 +40,30 @@ public class parser {
         {
         e.printStackTrace();
      }
+    }
+
+    public void addLineCount(){
+        int count = 0;
+        for (int i = 0; i < data.size(); i++){
+            count += 1;
+            String number = String.valueOf(count);
+            data.set(i, number);
+            System.out.println(data.get(i));
+        }
+    }
+
+    public String symbol(){
+        String numSubString = "";
+        for (int i = 0; i < data.size(); i++)
+        {
+            if (data.get(i).matches("[@].*"))
+            {
+            String num = (data.get(i));
+            numSubString = num.substring(1, num.length());
+            System.out.println(numSubString);
+            }
+        }
+        return numSubString;
     }
 
     public void save_data()
