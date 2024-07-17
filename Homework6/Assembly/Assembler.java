@@ -7,7 +7,7 @@ import java.io.StringWriter;
 public class Assembler {
 	private File assemblyCode;
 	private BufferedWriter machineCode;
-	private Code encoder;
+	private Code coder;
 	private SymbolTable symbolTable;
 	
 	public Assembler(File source, File target) throws IOException {
@@ -18,7 +18,7 @@ public class Assembler {
 		this.machineCode = new BufferedWriter(fw);
 		
 		// Initialize assembler components.
-		this.encoder = new Code();
+		this.coder = new Code();
 		this.symbolTable = new SymbolTable();
 	}
 	
@@ -33,9 +33,10 @@ public class Assembler {
 		while (parser.hasMoreCommands()) {
 			parser.advance();
 			
-			CommandType commandType = parser.commandType();
+			String commandType = parser.commandType();
 			
-			if (commandType.equals(CommandType.L_COMMAND)) {
+			
+			if (commandType.equals(Parser.L_COMMAND)) {
 				String symbol = parser.symbol();
 				int address = this.symbolTable.getProgramAddress();
 				this.symbolTable.addEntry(symbol, address);
@@ -52,10 +53,10 @@ public class Assembler {
 		while (parser.hasMoreCommands()) {
 			parser.advance();
 	
-			CommandType commandType = parser.commandType();
+			String commandType = parser.commandType();
 			String instruction = null;
 			
-			if (commandType.equals(CommandType.A_COMMAND)) {
+			if (commandType.equals(Parser.A_COMMAND)) {
 				// Format A-Instruction.
 				String symbol = parser.symbol();
 				Character firstCharacter = symbol.charAt(0);
@@ -80,7 +81,7 @@ public class Assembler {
 				}
 				
 				instruction = this.formatAInstruction(address);
-			} else if (commandType.equals(CommandType.C_COMMAND)) {
+			} else if (commandType.equals(Parser.C_COMMAND)) {
 				// Format C-Instruction
 				String comp = parser.comp();
 				String dest = parser.dest();
@@ -88,7 +89,7 @@ public class Assembler {
 				instruction = this.formatCInstruction(comp, dest, jump);
 			}
 	
-			if (!commandType.equals(CommandType.L_COMMAND)) {
+			if (!commandType.equals(Parser.L_COMMAND)) {
 				// Write binary instruction to file.
 				this.machineCode.write(instruction);
 				this.machineCode.newLine();
@@ -103,7 +104,7 @@ public class Assembler {
 
 	// Machine-format an A-Instruction.
 	private String formatAInstruction(String address) {
-		String formattedNumber = this.encoder.formatNumberAsBinary(address);
+		String formattedNumber = this.coder.createBinary(address);
 		return "0" + formattedNumber;
 	}
 	
@@ -111,9 +112,9 @@ public class Assembler {
 	private String formatCInstruction( String comp, String dest, String jump) {
 		StringWriter instruction = new StringWriter();
 		instruction.append("111");
-		instruction.append(this.encoder.comp(comp));
-		instruction.append(this.encoder.dest(dest));
-		instruction.append(this.encoder.jump(jump));
+		instruction.append(this.coder.comp(comp));
+		instruction.append(this.coder.dest(dest));
+		instruction.append(this.coder.jump(jump));
 		return instruction.toString();
 	}
 }

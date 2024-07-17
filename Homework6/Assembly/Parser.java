@@ -8,6 +8,9 @@ public class Parser {
 	private BufferedReader reader;
 	private String currentLine;
 	private String nextLine;
+	public static final String L_COMMAND = "L_COMMAND";
+	public static final String A_COMMAND = "A_COMMAND";
+	public static final String C_COMMAND = "C_COMMAND";
 	
 	// Opens the input file/stream and gets ready to parse it.
 	public Parser(File source) throws IOException {
@@ -77,15 +80,15 @@ public class Parser {
 	// - A_COMMAND for @Xxx where Xxx is either a symbol or a decimal number
 	// - C_COMMAND for dest=comp;jump
 	// - L_COMMAND (actually psuedo-command) for (Xxx) where Xxx is a symbol.
-	public CommandType commandType() {
+	public String commandType() {
 		String trimmedLine = this.currentLine.trim();
 		
 		if (trimmedLine.startsWith("(") && trimmedLine.endsWith(")")) {
-			return CommandType.L_COMMAND;
+			return L_COMMAND;
 		} else if (trimmedLine.startsWith("@")) {
-			return CommandType.A_COMMAND;
+			return A_COMMAND;
 		} else {
-			return CommandType.C_COMMAND;
+			return C_COMMAND;
 		}
 	}
 	
@@ -94,9 +97,9 @@ public class Parser {
 	public String symbol() {
 		String trimmedLine = this.currentLine.trim();
 		
-		if (this.commandType().equals(CommandType.L_COMMAND)) {
+		if (this.commandType().equals(L_COMMAND)) {
 			return trimmedLine.substring(1, this.currentLine.length() - 1);
-		} else if (this.commandType().equals(CommandType.A_COMMAND)) {
+		} else if (this.commandType().equals(A_COMMAND)) {
 			return trimmedLine.substring(1);
 		} else {
 			return null;
