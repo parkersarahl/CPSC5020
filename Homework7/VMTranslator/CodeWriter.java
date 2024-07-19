@@ -35,6 +35,9 @@ public class CodeWriter {
         this.operations.put("sub", "M=M-D");
         this.operations.put("or", "M=D|M");
         this.operations.put("and", "M=D&M");
+        this.operations.put("eq", "D:JEQ");
+        this.operations.put("lt", "D;JGT");
+        this.operations.put("gt", "D;JLT");
     }    
     
 
@@ -66,30 +69,21 @@ public class CodeWriter {
         } 
         else if(operation.equalsIgnoreCase("eq") || operation.equalsIgnoreCase("lt")
                 || operation.equalsIgnoreCase("gt")) {
-            writeLine("@SP");
-            writeLine("AM=M-1");
-            writeLine("D=M");
-            writeLine("A=A-1");
-            writeLine("D=D-M");
+            writeLine("@SP \nAM=M-1 \nD=M \nA=A-1 \nD=D-M");
             writeLine("@" + (currentLine + 7));
 
             if(operation.equalsIgnoreCase("eq")) {
-                writeLine("D;JEQ");
-            } else if(operation.equalsIgnoreCase("lt")) {
-                writeLine("D;JGT");
+                writeLine(operations.get("eq"));
+            } 
+            else if(operation.equalsIgnoreCase("lt")) {
+                writeLine(operations.get("lt"));
             } else if(operation.equalsIgnoreCase("gt")) {
-                writeLine("D;JLT");
+                writeLine(operations.get("gt"));
             }
-
-            writeLine("@SP");
-            writeLine("A=M-1");
-            writeLine("M=0");
+            writeLine("@SP \nA=M-1 \nM=0");
             writeLine("@" + (currentLine + 5));
-            writeLine("0;JMP");
-            writeLine("@SP");
-            writeLine("A=M-1");
-            writeLine("M=-1");
-
+            writeLine("0;JMP \n@SP \nA=M-1 \nM=-1");
+           
         } else if(operation.equalsIgnoreCase("not")) {
             writeLine("@SP");
             writeLine("A=M-1");
