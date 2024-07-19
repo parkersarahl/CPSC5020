@@ -1,12 +1,14 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Scanner;
 
 public class Parser {
 
     private int currentLineNumber;
     private String[] currentCommand;
+
     private ArrayList<String> instructions = new ArrayList<String>();
 
     public static final int C_ARITHMETIC = 1;
