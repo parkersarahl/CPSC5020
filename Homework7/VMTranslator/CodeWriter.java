@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Hashtable;
 
 
 public class CodeWriter {
@@ -8,6 +9,7 @@ public class CodeWriter {
     private PrintWriter writeOut;
     private int currentLine;
     private int labelNumber;
+    public Hashtable <String, String> operations;
 
     public CodeWriter(File output) throws FileNotFoundException {
         try {
@@ -17,41 +19,52 @@ public class CodeWriter {
         } catch(FileNotFoundException fnf) {
             throw new FileNotFoundException("File not found: " + fnf.getMessage());
         }
+        createHash();
     }
 
     public void setFileName(String filename) {
         this.filename = filename;
     }
 
-    public void writeInit() {
-        writeOut.println("// init");
-        writeLine("@256");
-        writeLine("D=A");
-        writeLine("@SP");
-        writeLine("M=D");
-        writeCall("Sys.init", 0);
+    public void createHash(){
+        this.operations = new Hashtable<String, String>();
+        createOperations();
     }
+    public void createOperations(){
+        this.operations.put("add", "M=D+M");
+        this.operations.put("sub", "M=M-D");
+        this.operations.put("or", "M=D|M");
+        this.operations.put("and", "M=D&M");
+    }    
+    
 
     public void writeArithmetic(String operation) {
         writeOut.println("// " + operation);
         if(operation.equalsIgnoreCase("add") || operation.equalsIgnoreCase("sub") || operation.equalsIgnoreCase("and")
-                || operation.equalsIgnoreCase("or")) {
-            writeLine("@SP");
-            writeLine("AM=M-1");
-            writeLine("D=M");
-            writeLine("A=A-1");
-
-            if(operation.equalsIgnoreCase("add")) {
-                writeLine("M=D+M");
-            } else if(operation.equalsIgnoreCase("sub")) {
-                writeLine("M=M-D");
-            } else if(operation.equalsIgnoreCase("and")) {
-                writeLine("M=D&M");
-            } else if(operation.equalsIgnoreCase("or")) {
-                writeLine("M=D|M");
+        || operation.equalsIgnoreCase("or"))
+        {
+        
+        writeLine("@SP \nAM=M-1 \nD=M \nA=A-1");
+       
+            if(operation.equalsIgnoreCase("add"))
+            {
+            writeLine(operations.get("add"));
+            }
+            else if(operation.equalsIgnoreCase("sub"))
+            {
+            writeLine(operations.get("sub"));
+            } 
+            else if (operation.equalsIgnoreCase("and"))
+            {
+            writeLine(operations.get("and"));
             }
 
-        } else if(operation.equalsIgnoreCase("eq") || operation.equalsIgnoreCase("lt")
+            else if(operation.equalsIgnoreCase("or")) 
+            {
+            writeLine(operations.get("and"));
+            }
+        } 
+        else if(operation.equalsIgnoreCase("eq") || operation.equalsIgnoreCase("lt")
                 || operation.equalsIgnoreCase("gt")) {
             writeLine("@SP");
             writeLine("AM=M-1");
