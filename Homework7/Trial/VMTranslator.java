@@ -24,7 +24,7 @@ public class VMTranslator {
         
         // iterate through each command
         while (parser.hasMoreCommands()) {
-            String command = parser.advance();
+            //String command = parser.advance();
             
             String ctype = parser.commandType();
             

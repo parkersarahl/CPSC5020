@@ -1,35 +1,23 @@
-/**output assembly code for VMTranslator.java
- *
- * take the file name to output to and get ready to write to it,
- * use writeArithmetic() and writePushPop() to translate,
- * arithmetic and push/pop commands from the VM file.
- **/
-
 import java.io.*;
 
 public class CodeWriter {
 
-    public BufferedWriter out;
+    public BufferedWriter output;
     public String file;
     private int i = 1;
-    // for unique labels and goto statements inside a function
     private String inFunction = "";
 
-    /** Open the output file, and
-     * get ready to write
-     **/
+    //Constructor for Codewriter
     public CodeWriter (String outFile) {
         if (outFile.contains(".vm")) {
             outFile = outFile.split(".vm")[0];
         }
-        // sets file name
         setFileName(outFile);
 
         outFile = outFile + ".asm";
 
         try {
-            out = new BufferedWriter(new FileWriter(new File(outFile)));
-
+            output = new BufferedWriter(new FileWriter(new File(outFile)));
             }
         
         catch (IOException e) {
@@ -37,18 +25,14 @@ public class CodeWriter {
         }
     }
 
-    // Informs the codeWriter that
-    // the translation of a new file has started
+    //used in constructor to set output filename
     public void setFileName (String fileName) {
-        // if a path
         if (fileName.contains("\\")) {
             fileName = fileName.substring(fileName.lastIndexOf("\\")+1,fileName.length());
         }
-        // if cotains .vm at the end
         if (fileName.contains(".vm")) {
             fileName = fileName.split(".vm")[0];
         }
-        
         file = fileName;
     }
 
@@ -56,120 +40,114 @@ public class CodeWriter {
     // arithmetic command
     public void writeArithmetic (String arth) {
         try {
-            // add the command as a comment
+            // adds comment to outputfile
             writeComment(arth);
             
-            // same for every arithmetic command,
-            // y
-            // SP--
-            out.write("@SP");
-            out.newLine();
-            out.write("M=M-1");
-            out.newLine();
-            // *SP
-            out.write("A=M");
-            out.newLine();
-            out.write("D=M");
-            out.newLine();
+            // used for every arithmetic command
+            output.write("@SP");
+            output.newLine();
+            output.write("M=M-1");
+            output.newLine();
+            output.write("A=M");
+            output.newLine();
+            output.write("D=M");
+            output.newLine();
 
-            // uses two variables from stack to perform the arithmetic
-            // x
+            //pulls two numbers from stack
             if (!(arth.equals("not") || arth.equals("neg"))) {
-                // SP--
-                out.write("@SP");
-                out.newLine();
-                out.write("M=M-1");
-                out.newLine();
-                // *SP
-                out.write("A=M");
-                out.newLine();
+                output.write("@SP");
+                output.newLine();
+                output.write("M=M-1");
+                output.newLine();
+                output.write("A=M");
+                output.newLine();
             }
 
 
             // different arth specific function commands
             if (arth.equals("add")) {
-                out.write("M=D+M");
-                out.newLine();
+                output.write("M=D+M");
+                output.newLine();
             }
             else if (arth.equals("sub")) {
-                out.write("M=M-D");
-                out.newLine();
+                output.write("M=M-D");
+                output.newLine();
             }
             else if (arth.equals("and")) {
-                out.write("M=D&M");
-                out.newLine();
+                output.write("M=D&M");
+                output.newLine();
             }
             else if (arth.equals("or")) {
-                out.write("M=D|M");
-                out.newLine();
+                output.write("M=D|M");
+                output.newLine();
             }
             else if (arth.equals("neg")) {
-                out.write("M=-D");
-                out.newLine();
+                output.write("M=-D");
+                output.newLine();
             }
             else if (arth.equals("not")) {
-                out.write("M=!D");
-                out.newLine();
+                output.write("M=!D");
+                output.newLine();
             }
             // these operations involve labels for if conditionals
             else if (arth.equals("eq") || arth.equals("gt") || arth.equals("lt")) {
                 // D = y - x
-                out.write("D=D-M");
-                out.newLine();
+                output.write("D=D-M");
+                output.newLine();
                 // A-instruction referencing a label
                 // i used to create a new Label with every new if conditional
-                out.write("@IF" + Integer.toString(i));
-                out.newLine();
+                output.write("@IF" + Integer.toString(i));
+                output.newLine();
 
                 // C-instruction with different jump statements
                 // if 'D == 0' goto IF_i
                 if (arth.equals("eq")) {
-                    out.write("D;JEQ");
-                    out.newLine();
+                    output.write("D;JEQ");
+                    output.newLine();
                 }
                 else if (arth.equals("gt")) {
-                    out.write("D;JLT");
-                    out.newLine();
+                    output.write("D;JLT");
+                    output.newLine();
                 }
                 else if (arth.equals("lt")) {
-                    out.write("D;JGT");
-                    out.newLine();
+                    output.write("D;JGT");
+                    output.newLine();
                 }
 
                 // similar part of the assembly code for the commands
                 // 'else false' part
-                out.write("@SP");
-                out.newLine();
-                out.write("A=M");
-                out.newLine();
-                out.write("M=0");
-                out.newLine();
+                output.write("@SP");
+                output.newLine();
+                output.write("A=M");
+                output.newLine();
+                output.write("M=0");
+                output.newLine();
 
                 // jump to the end of conditional after executing
                 // one part of the conditional
-                out.write("@END" + Integer.toString(i));
-                out.newLine();
-                out.write("0;JMP");
-                out.newLine();
+                output.write("@END" + Integer.toString(i));
+                output.newLine();
+                output.write("0;JMP");
+                output.newLine();
 
                 // 'true' part
-                out.write("(IF" + Integer.toString(i) + ")");
-                out.newLine();
-                out.write("@SP");
-                out.newLine();
-                out.write("A=M");
-                out.newLine();
-                out.write("M=-1");
-                out.newLine();
-                out.write("(END" + Integer.toString(i) + ")");
-                out.newLine();
+                output.write("(IF" + Integer.toString(i) + ")");
+                output.newLine();
+                output.write("@SP");
+                output.newLine();
+                output.write("A=M");
+                output.newLine();
+                output.write("M=-1");
+                output.newLine();
+                output.write("(END" + Integer.toString(i) + ")");
+                output.newLine();
             }
 
             // SP++, similar for all commands
-            out.write("@SP");
-            out.newLine();
-            out.write("M=M+1");
-            out.newLine();
+            output.write("@SP");
+            output.newLine();
+            output.write("M=M+1");
+            output.newLine();
 
             // Increment i for the different conditional statements
             i++;
@@ -221,31 +199,31 @@ public class CodeWriter {
             if (!(arg1.equals("constant") || arg1.equals("static") || arg1.equals("pointer"))) {
 
                 // @LCL
-                out.write("@" + seg);
-                out.newLine();
+                output.write("@" + seg);
+                output.newLine();
 
                 if (arg1.equals("temp")) {
                     // D = A
-                    out.write("D=A");
-                    out.newLine();
+                    output.write("D=A");
+                    output.newLine();
                 }
                 else {
                     // D = M
-                    out.write("D=M");
-                    out.newLine();
+                    output.write("D=M");
+                    output.newLine();
                 }
                 // @i
-                out.write("@" + index);
-                out.newLine();
+                output.write("@" + index);
+                output.newLine();
                 // D = D + A
-                out.write("D=D+A");
-                out.newLine();
+                output.write("D=D+A");
+                output.newLine();
                 // @addr
-                out.write("@addr");
-                out.newLine();
+                output.write("@addr");
+                output.newLine();
                 // M = D
-                out.write("M=D");
-                out.newLine();
+                output.write("M=D");
+                output.newLine();
             }
 
             // Pop command
@@ -253,39 +231,39 @@ public class CodeWriter {
             // *addr = *SP
             if (type.equals("C_POP")) {
                 //@ SP--
-                out.write("@SP");
-                out.newLine();
-                out.write("M=M-1");
-                out.newLine();
+                output.write("@SP");
+                output.newLine();
+                output.write("M=M-1");
+                output.newLine();
 
                 // *addr = *SP
-                out.write("A=M");
-                out.newLine();
-                out.write("D=M");
-                out.newLine();
+                output.write("A=M");
+                output.newLine();
+                output.write("D=M");
+                output.newLine();
 
                 if (arg1.equals("pointer")) {
                     if (index.equals("0")) {
-                        out.write("@THIS");
+                        output.write("@THIS");
                     }
                     else {
-                        out.write("@THAT");
+                        output.write("@THAT");
                     }
-                    out.newLine();
+                    output.newLine();
                 }
                 else if (arg1.equals("static")) {
-                    out.write("@" + file + "." + index);
-                    out.newLine();
+                    output.write("@" + file + "." + index);
+                    output.newLine();
                 }
                 else {
-                    out.write("@addr");
-                    out.newLine();
-                    out.write("A=M");
-                    out.newLine();
+                    output.write("@addr");
+                    output.newLine();
+                    output.write("A=M");
+                    output.newLine();
                 }
 
-                out.write("M=D");
-                out.newLine();
+                output.write("M=D");
+                output.newLine();
             }
 
 
@@ -296,62 +274,62 @@ public class CodeWriter {
                 //eg: A = M or @Foo.5 or @THIS
                 if (arg1.equals("pointer")) {
                     if (index.equals("0")) {
-                        out.write("@THIS");
+                        output.write("@THIS");
                     }
                     else {
-                        out.write("@THAT");
+                        output.write("@THAT");
                     }
-                    out.newLine();
+                    output.newLine();
 
                     // D = M
-                    out.write("D=M");
-                    out.newLine();
+                    output.write("D=M");
+                    output.newLine();
                 }
                 else if (arg1.equals("static")) {
-                    out.write("@" + file + "." + index);
-                    out.newLine();
+                    output.write("@" + file + "." + index);
+                    output.newLine();
 
                     // D = M
-                    out.write("D=M");
-                    out.newLine();
+                    output.write("D=M");
+                    output.newLine();
                 }
                 else if (arg1.equals("constant")) {
-                    out.write("@" + index);
-                    out.newLine();
+                    output.write("@" + index);
+                    output.newLine();
 
                     // D = A
-                    out.write("D=A");
-                    out.newLine();
+                    output.write("D=A");
+                    output.newLine();
                 }
                 else {
-                    out.write("A=M");
-                    out.newLine();
+                    output.write("A=M");
+                    output.newLine();
 
                     // D = M
-                    out.write("D=M");
-                    out.newLine();
+                    output.write("D=M");
+                    output.newLine();
                 }
 
                 // @SP
-                out.write("@SP");
-                out.newLine();
+                output.write("@SP");
+                output.newLine();
 
                 // A = M
-                out.write("A=M");
-                out.newLine();
+                output.write("A=M");
+                output.newLine();
 
                 // M = D
-                out.write("M=D");
-                out.newLine();
+                output.write("M=D");
+                output.newLine();
 
                 // SP++
                 // @SP
-                out.write("@SP");
-                out.newLine();
+                output.write("@SP");
+                output.newLine();
 
                 // M = M + 1
-                out.write("M=M+1");
-                out.newLine();
+                output.write("M=M+1");
+                output.newLine();
             }
         }
         catch (IOException e) {
@@ -363,45 +341,20 @@ public class CodeWriter {
     // close the output file
     public void close () {
         try {
-            out.close();
+            output.close();
         }
         catch (IOException e){
             System.out.println(e);
         }
     }
-
-    // Write assembly code that affects the VM initialization,
-    // also called bootstrap code, must be placed at the begining
-    // public void writeInit() {
-    //     try {
-    //         writeComment("BootStrap code");
-            
-    //         // SP = 256
-    //         out.write("@256");
-    //         out.newLine();
-    //         out.write("D = A");
-    //         out.newLine();
-    //         out.write("@SP");
-    //         out.newLine();
-    //         out.write("M = D");
-    //         out.newLine();
-
-    //         // call Sys.init
-    //         writeCall("Sys.init", "0");
-    //     }
-    //     catch (IOException e) {
-    //         System.out.println(e);
-    //     }
-    // }
-
     // Write Assembly code for the Label command
     public void writeLabel(String label) {
         try {
             writeComment("label " + label);
             
             // Label LABEL
-            out.write("(" + inFunction + "$" + label.toUpperCase() + ")");
-            out.newLine();
+            output.write("(" + inFunction + "$" + label.toUpperCase() + ")");
+            output.newLine();
         }
         catch (IOException e) {
             System.out.println(e);
@@ -414,10 +367,10 @@ public class CodeWriter {
             writeComment("goto " + label);
             
             // goto LABEL
-            out.write("@" + inFunction + "$" + label.toUpperCase());
-            out.newLine();
-            out.write("0;JMP");
-            out.newLine();
+            output.write("@" + inFunction + "$" + label.toUpperCase());
+            output.newLine();
+            output.write("0;JMP");
+            output.newLine();
         }
         catch (IOException e) {
             System.out.println(e);
@@ -430,20 +383,20 @@ public class CodeWriter {
             writeComment("if-goto " + label);
             
             // pop top-most value from stack
-            out.write("@SP");
-            out.newLine();
-            out.write("M=M-1");
-            out.newLine();
-            out.write("A=M");
-            out.newLine();
-            out.write("D=M");
-            out.newLine();
+            output.write("@SP");
+            output.newLine();
+            output.write("M=M-1");
+            output.newLine();
+            output.write("A=M");
+            output.newLine();
+            output.write("D=M");
+            output.newLine();
 
             // jump to the label, if the value is not equal to 0
-            out.write("@" + inFunction + "$" + label.toUpperCase());
-            out.newLine();
-            out.write("D;JNE");
-            out.newLine();
+            output.write("@" + inFunction + "$" + label.toUpperCase());
+            output.newLine();
+            output.write("D;JNE");
+            output.newLine();
 
         }
         catch (IOException e) {
@@ -462,82 +415,82 @@ public class CodeWriter {
             
             // Save caller's frame
             // push return address
-            out.write("@returnAddress" + i);
-            out.newLine();
-            out.write("D=A");
-            out.newLine();
+            output.write("@returnAddress" + i);
+            output.newLine();
+            output.write("D=A");
+            output.newLine();
             // push on Stack
             pushToStack();
             
             // push LCL
-            out.write("@LCL");
-            out.newLine();
-            out.write("D=M");
-            out.newLine();
+            output.write("@LCL");
+            output.newLine();
+            output.write("D=M");
+            output.newLine();
             pushToStack();
             
             // push ARG
-            out.write("@ARG");
-            out.newLine();
-            out.write("D=M");
-            out.newLine();
+            output.write("@ARG");
+            output.newLine();
+            output.write("D=M");
+            output.newLine();
             pushToStack();
             
             // push THIS
-            out.write("@THIS");
-            out.newLine();
-            out.write("D=M");
-            out.newLine();
+            output.write("@THIS");
+            output.newLine();
+            output.write("D=M");
+            output.newLine();
             pushToStack();
             
             // push THAT
-            out.write("@THAT");
-            out.newLine();
-            out.write("D=M");
-            out.newLine();
+            output.write("@THAT");
+            output.newLine();
+            output.write("D=M");
+            output.newLine();
             pushToStack();
             
             
             // Update value of ARG and LCL
             // ARG = SP - 5 - nArgs
-            out.write("@SP");
-            out.newLine();
-            out.write("D=M");
-            out.newLine();
-            out.write("@5");
-            out.newLine();
-            out.write("D=D-A");
-            out.newLine();
-            out.write("@" + nArgs);
-            out.newLine();
-            out.write("D=D-A");
-            out.newLine();
-            out.write("@ARG");
-            out.newLine();
-            out.write("M=D");
-            out.newLine();
+            output.write("@SP");
+            output.newLine();
+            output.write("D=M");
+            output.newLine();
+            output.write("@5");
+            output.newLine();
+            output.write("D=D-A");
+            output.newLine();
+            output.write("@" + nArgs);
+            output.newLine();
+            output.write("D=D-A");
+            output.newLine();
+            output.write("@ARG");
+            output.newLine();
+            output.write("M=D");
+            output.newLine();
             
             // LCL = SP
-            out.write("@SP");
-            out.newLine();
-            out.write("D=M");
-            out.newLine();
-            out.write("@LCL");
-            out.newLine();
-            out.write("M=D");
-            out.newLine();
+            output.write("@SP");
+            output.newLine();
+            output.write("D=M");
+            output.newLine();
+            output.write("@LCL");
+            output.newLine();
+            output.write("M=D");
+            output.newLine();
             
             
             // goto funcName
-            out.write("@" + funcName.toUpperCase());
-            out.newLine();
-            out.write("0;JMP");
-            out.newLine();
+            output.write("@" + funcName.toUpperCase());
+            output.newLine();
+            output.write("0;JMP");
+            output.newLine();
             
             
             // (returnAddress)
-            out.write("(returnAddress" + i + ")");
-            out.newLine();
+            output.write("(returnAddress" + i + ")");
+            output.newLine();
             
             // increment i for non-duplicate labels
             i++;
@@ -551,17 +504,17 @@ public class CodeWriter {
     private void pushToStack() {
         try {
             // push on Stack
-            out.write("@SP");
-            out.newLine();
-            out.write("A=M");
-            out.newLine();
-            out.write("M=D");
-            out.newLine();
+            output.write("@SP");
+            output.newLine();
+            output.write("A=M");
+            output.newLine();
+            output.write("M=D");
+            output.newLine();
             // SP++
-            out.write("@SP");
-            out.newLine();
-            out.write("M=M+1");
-            out.newLine();
+            output.write("@SP");
+            output.newLine();
+            output.write("M=M+1");
+            output.newLine();
         }
         catch (IOException e) {
             System.out.println(e);
@@ -574,14 +527,14 @@ public class CodeWriter {
             writeComment("return");
             
             // endFrame = LCL
-            out.write("@LCL");
-            out.newLine();
-            out.write("D=M");
-            out.newLine();
-            out.write("@endFrame");
-            out.newLine();
-            out.write("M=D");
-            out.newLine();
+            output.write("@LCL");
+            output.newLine();
+            output.write("D=M");
+            output.newLine();
+            output.write("@endFrame");
+            output.newLine();
+            output.write("M=D");
+            output.newLine();
             
             // retAddr = *(endFrame - 5)
             // D-register still have endFrame value
@@ -591,16 +544,16 @@ public class CodeWriter {
             writePushPop("C_POP", "argument", "0");
             
             // SP = ARG + 1
-            out.write("@ARG");
-            out.newLine();
-            out.write("D=M");
-            out.newLine();
-            out.write("D=D+1");
-            out.newLine();
-            out.write("@SP");
-            out.newLine();
-            out.write("M=D");
-            out.newLine();
+            output.write("@ARG");
+            output.newLine();
+            output.write("D=M");
+            output.newLine();
+            output.write("D=D+1");
+            output.newLine();
+            output.write("@SP");
+            output.newLine();
+            output.write("M=D");
+            output.newLine();
             
             // THAT = *(endFrame - 1)
             endFrameMinus("THAT", "1");
@@ -615,12 +568,12 @@ public class CodeWriter {
             endFrameMinus("LCL", "4");
             
             // goto retAddr
-            out.write("@retAddr");
-            out.newLine();
-            out.write("A=M");
-            out.newLine();
-            out.write("0;JMP");
-            out.newLine();
+            output.write("@retAddr");
+            output.newLine();
+            output.write("A=M");
+            output.newLine();
+            output.write("0;JMP");
+            output.newLine();
         }
         catch (IOException e) {
             System.out.println(e);
@@ -630,22 +583,22 @@ public class CodeWriter {
     // write assembly code for seg = *(endFrame - n)
     private void endFrameMinus(String seg, String n) {
         try {
-            out.write("@endFrame");
-            out.newLine();
-            out.write("D=M");
-            out.newLine();
-            out.write("@" + n);
-            out.newLine();
-            out.write("D=D-A");
-            out.newLine();
-            out.write("A=D");
-            out.newLine();
-            out.write("D=M");
-            out.newLine();
-            out.write("@" + seg);
-            out.newLine();
-            out.write("M=D");
-            out.newLine();
+            output.write("@endFrame");
+            output.newLine();
+            output.write("D=M");
+            output.newLine();
+            output.write("@" + n);
+            output.newLine();
+            output.write("D=D-A");
+            output.newLine();
+            output.write("A=D");
+            output.newLine();
+            output.write("D=M");
+            output.newLine();
+            output.write("@" + seg);
+            output.newLine();
+            output.write("M=D");
+            output.newLine();
         }
         catch (IOException e) {
             System.out.println(e);
@@ -661,40 +614,40 @@ public class CodeWriter {
             writeComment("function " + funcName + " " + nLocals);
             
             // (funcName)
-            out.write("(" + funcName.toUpperCase() + ")");
-            out.newLine();
+            output.write("(" + funcName.toUpperCase() + ")");
+            output.newLine();
             
             
             // repeat nLocals times : push 0
             // n = nLocals
-            out.write("@" + nLocals);
-            out.newLine();
-            out.write("D=A");
-            out.newLine();
-            out.write("@n");
-            out.newLine();
-            out.write("M=D");
-            out.newLine();
+            output.write("@" + nLocals);
+            output.newLine();
+            output.write("D=A");
+            output.newLine();
+            output.write("@n");
+            output.newLine();
+            output.write("M=D");
+            output.newLine();
             
             // while(n > 0)
             writeLabel("LOOP");
-            out.write("@n");
-            out.newLine();
-            out.write("D=M");
-            out.newLine();
-            out.write("@" + funcName.toUpperCase() + "$END_LOOP");
-            out.newLine();
-            out.write("D;JLE");
-            out.newLine();
+            output.write("@n");
+            output.newLine();
+            output.write("D=M");
+            output.newLine();
+            output.write("@" + funcName.toUpperCase() + "$END_LOOP");
+            output.newLine();
+            output.write("D;JLE");
+            output.newLine();
             
             // push 0
             writePushPop("C_PUSH", "constant", "0");
             
             // n--
-            out.write("@n");
-            out.newLine();
-            out.write("M=M-1");
-            out.newLine();
+            output.write("@n");
+            output.newLine();
+            output.write("M=M-1");
+            output.newLine();
             
             // goto LOOP
             writeGoto("LOOP");
@@ -712,8 +665,8 @@ public class CodeWriter {
     // Write one line comments with string provided
     private void writeComment(String line) {
         try {
-            out.write("// " + line);
-            out.newLine();
+            output.write("// " + line);
+            output.newLine();
         }
         catch (IOException e) {
             System.out.println(e);
