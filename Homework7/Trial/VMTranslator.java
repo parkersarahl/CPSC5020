@@ -59,38 +59,13 @@ public class VMTranslator {
         
         File path = new File(args[0]);
         
-        VMTranslator vmt = new VMTranslator();
+        VMTranslator translator = new VMTranslator();
         
-        // argument could be a file or directory containing multiple files
-        // FilenameFilter will only accept files with .vm extension
-        File[] files = path.listFiles(new FilenameFilter() {
-            public boolean accept(File dir, String name) {
-                return name.toLowerCase().endsWith(".vm");
-            }
-        });
-        // if path is a directory
-        if (files != null) {
-            // create CodeWriter
-            String outFileName = args[0];
-            if (args[0].contains("\\")) {
-                outFileName = args[0].substring(args[0].lastIndexOf("\\")+1,args[0].length());
-            }
-            vmt.code = new CodeWriter(args[0] + "\\" + outFileName);
-            
-            for (File file : files) {
-                // set the file name in CodeWriter
-                vmt.code.setFileName(file.getPath());
-                vmt.parse(file);
-            }
-        }
-        // single file
-        else {
-            // create CodeWriter
-            vmt.code = new CodeWriter(args[0]);
-            vmt.code.setFileName(path.getPath());
-            vmt.parse(path);
-        }
-        
-        vmt.code.close();
+        //Takes a file and uses Parser to parse
+        //opens a new Codewriter with the outputfile
+            translator.code = new CodeWriter(args[0]);
+            translator.code.setFileName(path.getPath());
+            translator.parse(path);  
+            translator.code.close();
+        }    
     }
-}
