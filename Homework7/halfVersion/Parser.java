@@ -1,154 +1,110 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.io.*;
 
 public class Parser {
-
-    private int currentLineNumber;
-    private String[] currentCommand;
-
-    private ArrayList<String> instructions = new ArrayList<String>();
-
-    public static final int C_ARITHMETIC = 1;
-    public static final int C_PUSH = 2;
-    public static final int C_POP = 3;
-    public static final int C_LABEL = 4;
-    public static final int C_GOTO = 5;
-    public static final int C_IF = 6;
-    public static final int C_FUNCTION = 7;
-    public static final int C_CALL = 8;
-    public static final int C_RETURN = 9;
-
-    ArrayList<String> arithmeticCommands;
-
-    public Parser(File input) throws FileNotFoundException, Exception {
-        try {                                                                   // add all non-whitespace lines
-            removeWhitespace(input);                                            // to an array list of instructions
-            initializeArithmeticCommands();
-            currentLineNumber = 0;
-            if(!instructions.isEmpty()) {
-                currentCommand = instructions.get(currentLineNumber).split("\\s");
-            } else {
-                throw new Exception("No valid instructions.");
-            }
-        } catch (FileNotFoundException fnf) {
-            throw new FileNotFoundException(fnf.getMessage());
+    
+    public String command;
+    public String type;
+    public BufferedReader in;
+    
+    // Opens File
+    public Parser(File sourceFile) {
+        try {
+            in = new BufferedReader(new FileReader(sourceFile));
+        }
+        catch (IOException e) {
+            System.out.println(e);
         }
     }
-
-    private void initializeArithmeticCommands() {
-        arithmeticCommands = new ArrayList<String>();
-
-        arithmeticCommands.add("add");
-        arithmeticCommands.add("sub");
-        arithmeticCommands.add("neg");
-        arithmeticCommands.add("eq");
-        arithmeticCommands.add("gt");
-        arithmeticCommands.add("lt");
-        arithmeticCommands.add("and");
-        arithmeticCommands.add("or");
-        arithmeticCommands.add("not");
-    }
-
+    
     public boolean hasMoreCommands() {
-        return (currentLineNumber < instructions.size() - 1);
+        try {
+            while ((command = in.readLine()) != null) {
+                // skip empty lines
+                if (command.isEmpty()) {
+                    continue;
+                }
+                type = command.trim().split(" ")[0];
+                
+                
+                // skips comments
+                command = command.trim().toLowerCase();
+                
+                if (command.charAt(0) == '/' && command.charAt(1) == '/') {
+                    continue;
+                }
+                if (command.contains("//")) {
+                    command = command.split("//")[0].trim();
+                }
+                return true;
+            }
+            in.close();
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+        return false;
     }
+    
 
-    public void advance() {
-        currentLineNumber++;
-        currentCommand = instructions.get(currentLineNumber).split("\\s");
+    // called if hasMoreCommands() return true
+    public String advance() {
+        return command;
     }
-
-    public int commandType() {
-        String type = currentCommand[0];
-        if(arithmeticCommands.contains(type)) {
-            return C_ARITHMETIC;
+    
+    // returns Command Type  
+    public String commandType() {
+        if (type.equals("push")) {
+            type = "C_PUSH";
         }
-
-        if(type.equalsIgnoreCase("push")) {
-            return C_PUSH;
+        else if (type.equals("pop")) {
+            type = "C_POP";
         }
-
-        if(type.equalsIgnoreCase("pop")) {
-            return C_POP;
+        else if (type.equals("label")) {
+            type = "C_LABEL";
         }
-
-        if(type.equalsIgnoreCase("label")) {
-            return C_LABEL;
+        else if (type.equals("goto")) {
+            type = "C_GOTO";
         }
-
-        if(type.equalsIgnoreCase("goto")) {
-            return C_GOTO;
+        else if (type.equals("if-goto")) {
+            type = "C_IF";
         }
-
-        if(type.equalsIgnoreCase("if-goto")) {
-            return C_IF;
+        else if (type.equals("function")) {
+            type = "C_FUNCTION";
         }
-
-        if(type.equalsIgnoreCase("function")) {
-            return C_FUNCTION;
+        else if (type.equals("return")) {
+            type = "C_RETURN";
         }
-
-        if(type.equalsIgnoreCase("call")) {
-            return C_CALL;
-        }
-
-        if(type.equalsIgnoreCase("return")) {
-            return C_RETURN;
-        }
-
-        return 0;
-    }
-
-    public String arg1() {
-        if(this.commandType() == C_ARITHMETIC) {
-            return currentCommand[0];
+        else if (type.equals("call")) {
+            type = "C_CALL";
         }
         else {
-            return currentCommand[1];
+            type = "C_ARITHMETIC";
+        }
+        return type;
+    }
+    
+    /** returns first argument of the command
+     * 
+     * if command type is C_ARITHMETIC return command itself
+     * Should not be called if command is C_RETURN
+     * 
+     **/
+    public String arg1() {
+        if (type.equals("C_ARITHMETIC")) {
+            return command;
+        }
+        else {
+            return command.split(" ")[1];
         }
     }
-
-    public int arg2() throws NumberFormatException {
-        try {
-            return Integer.parseInt(currentCommand[2]);
-        } catch (NumberFormatException nfe) {
-            throw new NumberFormatException("Invalid argument: " + nfe.getMessage());
-        }
-    }
-
-    public void removeWhitespace(File input) throws FileNotFoundException {
-        try {
-            Scanner in = new Scanner(input);
-
-            while(in.hasNext()) {
-                String next = in.nextLine();                                // reads each line and splits into
-                String[] line = next.split("\\s");                          // an array of string tokens
-                String command = "";
-
-                for(int i = 0; i < line.length; i++) {
-                    if(line.length == 0) {                                  // ignores empty lines
-                        break;
-                    } else if(line[i].length() > 1 && line[i].substring(0, 2).equals("//") && i != 0) {
-                        break;                                              // ignores inline comments
-                    } else if(line[i].length() > 1 && line[i].substring(0, 2).equals("//") && i == 0) {
-                        break;                                              // ignores whole-line comments
-                    }  else {
-                        command += line[i];
-                        command += " ";                                     // preserves space between command words
-                    }
-                }
-
-                if(!(command.equals("") || command.equals(" "))) {
-                    instructions.add(command.trim());
-                }
-            }
-
-            in.close();
-
-        } catch(FileNotFoundException fnf) {
-            throw new FileNotFoundException("File not found: " + fnf.getMessage());
-        }
+    
+    /** Returns second argument of the command
+     * 
+     * Should be called only if current command is
+     * C_PUSH, C_POP, C_FUNCTION, C_CALL
+     * 
+     **/
+    public String arg2() {
+        return command.split(" ")[2];
     }
 }

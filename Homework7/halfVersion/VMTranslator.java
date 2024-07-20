@@ -1,73 +1,71 @@
-import java.io.File;
-//import java.io.FileNotFoundException;
+/** Translates VM code into Assembly code
+ * 
+ * Usage: java VMTranslator <file-name/path-to-directory>
+ * 
+ * Dependencies: Parser.java, CodeWriter.java
+ * 
+ * - Constructs a Parser from input file
+ * - Construct a CodeWriter to generate code in output file
+ * - Read VM commands and generate corresponding Assembly code
+ * 
+ **/
+import java.io.*;
 
 public class VMTranslator {
-    public static void main(String[] args) {
-        if(args.length > 0) {
-            try {
-                
-                File sourceFile = new File(args[0]);
-
-                //Check to see if file is valid
-                if (sourceFile.isFile()) {
-                    String fileName = sourceFile.getName();
-                    int fileNameExtensionIndex = fileName.lastIndexOf(".");
-                    
-                    //Write output file
-                    String fileNameNoExtension = fileName.substring(0, fileNameExtensionIndex);
-                    String outputFilePath =  fileNameNoExtension + ".asm";
-                    File outputFile = new File(outputFilePath);
-                    
-
-                    //Create CodeWriter Object and initialize
-                    CodeWriter cw = new CodeWriter(outputFile); 
-                    String name = sourceFile.getName();
-                    name = name.substring(0, name.indexOf('.'));
-                    cw.setFileName(name);
-
-                    Parser p = new Parser(sourceFile);
-                    while(true) {
-                        if(p.commandType() == 0) {
-                            System.out.println(sourceFile + " contains an invalid instruction.");
-                            return;
-                            }
-
-                        if(p.commandType() == Parser.C_ARITHMETIC) {
-                            cw.writeArithmetic(p.arg1());
-                        } else if(p.commandType() == Parser.C_PUSH || p.commandType() == Parser.C_POP) {
-                            cw.writePushPop(p.commandType(), p.arg1(), p.arg2());
-                        } else if(p.commandType() == Parser.C_LABEL) {
-                            cw.writeLabel(p.arg1());
-                        } else if(p.commandType() == Parser.C_GOTO) {                                
-                            cw.writeGoto(p.arg1());
-                        } else if(p.commandType() == Parser.C_IF) {
-                            cw.writeIf(p.arg1());
-                        } else if(p.commandType() == Parser.C_FUNCTION) {
-                            cw.writeFunction(p.arg1(), p.arg2());
-                        } else if(p.commandType() == Parser.C_CALL) {
-                            cw.writeCall(p.arg1(), p.arg2());
-                        } else if(p.commandType() == Parser.C_RETURN) {
-                            cw.writeReturn();
-                        }
-                        if(p.hasMoreCommands()) {
-                            p.advance();
-                            } else break;
-                        }
-                     cw.close();
-                    }
-                  {
-                }
-
-            } catch (Exception e) {
-                System.out.println("Error: " + e.getMessage());
-                e.printStackTrace();
+    
+    public Parser parser;
+    public CodeWriter code;
+    
+    // take a filename, create parser and
+    // translate each vm commands in file 
+    private void parse(File sourceFile) {
+        // construct a parser with the file
+        parser = new Parser(sourceFile);
+        
+        // iterate through each command
+        while (parser.hasMoreCommands()) {
+            //String command = parser.advance();
+            
+            String ctype = parser.commandType();
+            
+            if (ctype.equals("C_ARITHMETIC")) {
+                code.writeArithmetic(parser.arg1());
             }
-        } else {
-            System.out.println("No source entered.");
+            else if (ctype.equals("C_PUSH") || ctype.equals("C_POP")) {
+                code.writePushPop(ctype, parser.arg1(), parser.arg2());
+            }
+            else if (ctype.equals("C_LABEL")) {
+                code.writeLabel(parser.arg1());
+            }
+            else if (ctype.equals("C_GOTO")) {
+                code.writeGoto(parser.arg1());
+            }
+            else if (ctype.equals("C_IF")) {
+                code.writeIf(parser.arg1());
+            }
+            else if (ctype.equals("C_CALL")) {
+                code.writeCall(parser.arg1(), parser.arg2());
+            }
+            else if (ctype.equals("C_FUNCTION")) {
+                code.writeFunction(parser.arg1(), parser.arg2());
+            }
+            else if (ctype.equals("C_RETURN")) {
+                code.writeReturn();
+            }
         }
     }
-}
     
-
-
-    
+    public static void main(String[] args) {
+        
+        File path = new File(args[0]);
+        
+        VMTranslator translator = new VMTranslator();
+        
+        //Takes a file and uses Parser to parse
+        //opens a new Codewriter with the outputfile
+            translator.code = new CodeWriter(args[0]);
+            translator.code.setFileName(path.getPath());
+            translator.parse(path);  
+            translator.code.close();
+        }    
+    }
