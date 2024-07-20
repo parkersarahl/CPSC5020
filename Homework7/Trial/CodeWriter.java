@@ -36,7 +36,7 @@ public class CodeWriter {
         file = fileName;
     }
 
-    // write the asm code for specified arithmetic command
+    // Writes translation for specified arithmetic command
     public void writeArithmetic (String arithmetic) {
         try {
             // adds comment to outputfile
@@ -52,7 +52,6 @@ public class CodeWriter {
             output.write("D=M");
             output.newLine();
 
-            //pulls two numbers from stack
             if (!(arithmetic.equals("not") || arithmetic.equals("neg"))) {
                 output.write("@SP");
                 output.newLine();
@@ -62,7 +61,6 @@ public class CodeWriter {
                 output.newLine();
             }
             
-            //arithmetic commands
             if (arithmetic.equals("add")) {
                 output.write("M=D+M");
                 output.newLine();
@@ -87,7 +85,8 @@ public class CodeWriter {
                 output.write("M=!D");
                 output.newLine();
             }
-            // these operations involve labels for if conditionals
+
+            // Conditionals
             else if (arithmetic.equals("eq") || arithmetic.equals("gt") || arithmetic.equals("lt")) {
                 output.write("D=D-M");
                 output.newLine();
@@ -122,7 +121,7 @@ public class CodeWriter {
                 output.write("0;JMP");
                 output.newLine();
 
-                // 'true'
+                // "true"
                 output.write("(IF" + Integer.toString(i) + ")");
                 output.newLine();
                 output.write("@SP");
@@ -149,7 +148,7 @@ public class CodeWriter {
 
     }
 
-    // write the translation of push/pop command
+    // Writes the translation of push/pop command
     public void writePushPop (String type, String arg1, String index) {
         // add command as a comment
         String com;
@@ -162,71 +161,60 @@ public class CodeWriter {
         writeComment(com + " " + arg1 + " " + index);
         
         
-        String seg = "";
+        String segment = "";
 
-        // store the appropriate segment
-        // @segment
+        // sets segment
         if (arg1.equals("argument")) {
-            seg = "ARG";
+            segment = "ARG";
         }
         else if (arg1.equals("local")) {
-            seg = "LCL";
+            segment = "LCL";
         }
         else if (arg1.equals("this")) {
-            seg = "THIS";
+            segment = "THIS";
         }
         else if (arg1.equals("that")) {
-            seg = "THAT";
+            segment = "THAT";
         }
         else if (arg1.equals("temp")) {
-            seg = "5";
+            segment = "5";
         }
 
         try {
-            // create assembly code for pseudocode
+            // Translate for addresses
             // addr = LCL + i
-            // !!! LCL and like invoked in what way???
             if (!(arg1.equals("constant") || arg1.equals("static") || arg1.equals("pointer"))) {
 
                 // @LCL
-                output.write("@" + seg);
+                output.write("@" + segment);
                 output.newLine();
 
                 if (arg1.equals("temp")) {
-                    // D = A
                     output.write("D=A");
                     output.newLine();
                 }
                 else {
-                    // D = M
                     output.write("D=M");
                     output.newLine();
                 }
-                // @i
+                
                 output.write("@" + index);
                 output.newLine();
-                // D = D + A
                 output.write("D=D+A");
                 output.newLine();
-                // @addr
                 output.write("@addr");
                 output.newLine();
-                // M = D
                 output.write("M=D");
                 output.newLine();
             }
 
-            // Pop command
-            // SP--
-            // *addr = *SP
+            // Pop Command
             if (type.equals("C_POP")) {
-                //@ SP--
+            
                 output.write("@SP");
                 output.newLine();
                 output.write("M=M-1");
                 output.newLine();
-
-                // *addr = *SP
                 output.write("A=M");
                 output.newLine();
                 output.write("D=M");
@@ -256,12 +244,8 @@ public class CodeWriter {
                 output.newLine();
             }
 
-
             // Push command
-            // *SP = *addr
-            // SP++
             else {
-                //eg: A = M or @Foo.5 or @THIS
                 if (arg1.equals("pointer")) {
                     if (index.equals("0")) {
                         output.write("@THIS");
@@ -270,54 +254,36 @@ public class CodeWriter {
                         output.write("@THAT");
                     }
                     output.newLine();
-
-                    // D = M
                     output.write("D=M");
                     output.newLine();
                 }
                 else if (arg1.equals("static")) {
                     output.write("@" + file + "." + index);
                     output.newLine();
-
-                    // D = M
                     output.write("D=M");
                     output.newLine();
                 }
                 else if (arg1.equals("constant")) {
                     output.write("@" + index);
                     output.newLine();
-
-                    // D = A
                     output.write("D=A");
                     output.newLine();
                 }
                 else {
                     output.write("A=M");
                     output.newLine();
-
-                    // D = M
                     output.write("D=M");
                     output.newLine();
                 }
 
-                // @SP
                 output.write("@SP");
                 output.newLine();
-
-                // A = M
                 output.write("A=M");
                 output.newLine();
-
-                // M = D
                 output.write("M=D");
                 output.newLine();
-
-                // SP++
-                // @SP
                 output.write("@SP");
                 output.newLine();
-
-                // M = M + 1
                 output.write("M=M+1");
                 output.newLine();
             }
@@ -325,7 +291,6 @@ public class CodeWriter {
         catch (IOException e) {
             System.out.println(e);
         }
-
     }
 
     // close the output file
@@ -337,7 +302,8 @@ public class CodeWriter {
             System.out.println(e);
         }
     }
-    // Write Assembly code for the Label command
+    
+    // Writes the translation for label command
     public void writeLabel(String label) {
         try {
             writeComment("label " + label);
@@ -351,12 +317,11 @@ public class CodeWriter {
         }
     }
 
-    // Write Assembly code for the goto command
+    // Writes the translation for GoTo
     public void writeGoto(String label) {
         try {
             writeComment("goto " + label);
             
-            // goto LABEL
             output.write("@" + inFunction + "$" + label.toUpperCase());
             output.newLine();
             output.write("0;JMP");
@@ -367,12 +332,11 @@ public class CodeWriter {
         }
     }
 
-    // Write Assembly code for the if-goto command
+    // Writes the translation for If-GoTo command
     public void writeIf(String label) {
         try {
             writeComment("if-goto " + label);
             
-            // pop top-most value from stack
             output.write("@SP");
             output.newLine();
             output.write("M=M-1");
@@ -382,7 +346,6 @@ public class CodeWriter {
             output.write("D=M");
             output.newLine();
 
-            // jump to the label, if the value is not equal to 0
             output.write("@" + inFunction + "$" + label.toUpperCase());
             output.newLine();
             output.write("D;JNE");
@@ -470,19 +433,14 @@ public class CodeWriter {
             output.write("M=D");
             output.newLine();
             
-            
-            // goto funcName
             output.write("@" + funcName.toUpperCase());
             output.newLine();
             output.write("0;JMP");
             output.newLine();
-            
-            
-            // (returnAddress)
+
             output.write("(returnAddress" + i + ")");
             output.newLine();
             
-            // increment i for non-duplicate labels
             i++;
         }
         catch (IOException e) {
@@ -490,17 +448,15 @@ public class CodeWriter {
         }
     }
     
-    // Write assembly code for pushing value in D-register to Stack
+    // Writes code for pushing value in D-register to Stack
     private void pushToStack() {
         try {
-            // push on Stack
             output.write("@SP");
             output.newLine();
             output.write("A=M");
             output.newLine();
             output.write("M=D");
             output.newLine();
-            // SP++
             output.write("@SP");
             output.newLine();
             output.write("M=M+1");
@@ -516,7 +472,6 @@ public class CodeWriter {
         try {
             writeComment("return");
             
-            // endFrame = LCL
             output.write("@LCL");
             output.newLine();
             output.write("D=M");
@@ -571,7 +526,7 @@ public class CodeWriter {
     }
     
     // write assembly code for seg = *(endFrame - n)
-    private void endFrameMinus(String seg, String n) {
+    private void endFrameMinus(String segment, String n) {
         try {
             output.write("@endFrame");
             output.newLine();
@@ -585,7 +540,7 @@ public class CodeWriter {
             output.newLine();
             output.write("D=M");
             output.newLine();
-            output.write("@" + seg);
+            output.write("@" + segment);
             output.newLine();
             output.write("M=D");
             output.newLine();
@@ -595,9 +550,9 @@ public class CodeWriter {
         }
     }
 
-    // Write Assembly code for the function command
+    // Translates code for the function command
     public void writeFunction(String funcName, String nLocals) {
-        // set inFunction to funcName
+        
         inFunction = funcName.toUpperCase();
         
         try {
@@ -609,7 +564,6 @@ public class CodeWriter {
             
             
             // repeat nLocals times : push 0
-            // n = nLocals
             output.write("@" + nLocals);
             output.newLine();
             output.write("D=A");
@@ -630,19 +584,15 @@ public class CodeWriter {
             output.write("D;JLE");
             output.newLine();
             
-            // push 0
             writePushPop("C_PUSH", "constant", "0");
             
-            // n--
             output.write("@n");
             output.newLine();
             output.write("M=M-1");
             output.newLine();
             
-            // goto LOOP
             writeGoto("LOOP");
             
-            // (END_LOOPi)
             writeLabel("END_LOOP");
             
             i++;
@@ -652,7 +602,7 @@ public class CodeWriter {
         }
     }
     
-    // Write one line comments with string provided
+    // Writes comment
     private void writeComment(String line) {
         try {
             output.write("// " + line);
