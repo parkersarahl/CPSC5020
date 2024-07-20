@@ -36,12 +36,11 @@ public class CodeWriter {
         file = fileName;
     }
 
-    // write the assembly code for given
-    // arithmetic command
-    public void writeArithmetic (String arth) {
+    // write the asm code for specified arithmetic command
+    public void writeArithmetic (String arithmetic) {
         try {
             // adds comment to outputfile
-            writeComment(arth);
+            writeComment(arithmetic);
             
             // used for every arithmetic command
             output.write("@SP");
@@ -54,7 +53,7 @@ public class CodeWriter {
             output.newLine();
 
             //pulls two numbers from stack
-            if (!(arth.equals("not") || arth.equals("neg"))) {
+            if (!(arithmetic.equals("not") || arithmetic.equals("neg"))) {
                 output.write("@SP");
                 output.newLine();
                 output.write("M=M-1");
@@ -62,60 +61,54 @@ public class CodeWriter {
                 output.write("A=M");
                 output.newLine();
             }
-
-
-            // different arth specific function commands
-            if (arth.equals("add")) {
+            
+            //arithmetic commands
+            if (arithmetic.equals("add")) {
                 output.write("M=D+M");
                 output.newLine();
             }
-            else if (arth.equals("sub")) {
+            else if (arithmetic.equals("sub")) {
                 output.write("M=M-D");
                 output.newLine();
             }
-            else if (arth.equals("and")) {
+            else if (arithmetic.equals("and")) {
                 output.write("M=D&M");
                 output.newLine();
             }
-            else if (arth.equals("or")) {
+            else if (arithmetic.equals("or")) {
                 output.write("M=D|M");
                 output.newLine();
             }
-            else if (arth.equals("neg")) {
+            else if (arithmetic.equals("neg")) {
                 output.write("M=-D");
                 output.newLine();
             }
-            else if (arth.equals("not")) {
+            else if (arithmetic.equals("not")) {
                 output.write("M=!D");
                 output.newLine();
             }
             // these operations involve labels for if conditionals
-            else if (arth.equals("eq") || arth.equals("gt") || arth.equals("lt")) {
-                // D = y - x
+            else if (arithmetic.equals("eq") || arithmetic.equals("gt") || arithmetic.equals("lt")) {
                 output.write("D=D-M");
                 output.newLine();
-                // A-instruction referencing a label
-                // i used to create a new Label with every new if conditional
                 output.write("@IF" + Integer.toString(i));
                 output.newLine();
 
-                // C-instruction with different jump statements
-                // if 'D == 0' goto IF_i
-                if (arth.equals("eq")) {
+                // Jump statements
+                if (arithmetic.equals("eq")) {
                     output.write("D;JEQ");
                     output.newLine();
                 }
-                else if (arth.equals("gt")) {
+                else if (arithmetic.equals("gt")) {
                     output.write("D;JLT");
                     output.newLine();
                 }
-                else if (arth.equals("lt")) {
+                else if (arithmetic.equals("lt")) {
                     output.write("D;JGT");
                     output.newLine();
                 }
 
-                // similar part of the assembly code for the commands
-                // 'else false' part
+                //"else == false"
                 output.write("@SP");
                 output.newLine();
                 output.write("A=M");
@@ -123,14 +116,13 @@ public class CodeWriter {
                 output.write("M=0");
                 output.newLine();
 
-                // jump to the end of conditional after executing
-                // one part of the conditional
+                // jump after executing part of the conditional
                 output.write("@END" + Integer.toString(i));
                 output.newLine();
                 output.write("0;JMP");
                 output.newLine();
 
-                // 'true' part
+                // 'true'
                 output.write("(IF" + Integer.toString(i) + ")");
                 output.newLine();
                 output.write("@SP");
@@ -143,13 +135,11 @@ public class CodeWriter {
                 output.newLine();
             }
 
-            // SP++, similar for all commands
+            // SP++
             output.write("@SP");
             output.newLine();
             output.write("M=M+1");
             output.newLine();
-
-            // Increment i for the different conditional statements
             i++;
 
         }
