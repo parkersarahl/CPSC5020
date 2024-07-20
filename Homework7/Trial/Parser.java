@@ -1,10 +1,3 @@
-/**Handles the parsing of a single .vm file, and 
- * encapsulates access to the input code. 
- * It reads VM commands, parses them, and
- * provides convenient access to their components
- * 
- **/
-
 import java.io.*;
 
 public class Parser {
@@ -13,17 +6,16 @@ public class Parser {
     public String type;
     public BufferedReader in;
     
-    // Opens the file and get ready to parse it
-    public Parser(File inFile) {
+    // Opens File
+    public Parser(File sourceFile) {
         try {
-            in = new BufferedReader(new FileReader(inFile));
+            in = new BufferedReader(new FileReader(sourceFile));
         }
         catch (IOException e) {
             System.out.println(e);
         }
     }
     
-    // are there more commands in the file?
     public boolean hasMoreCommands() {
         try {
             while ((command = in.readLine()) != null) {
@@ -34,35 +26,17 @@ public class Parser {
                 type = command.trim().split(" ")[0];
                 
                 
-                // check for one line and multi line comments and skip past them
+                // skips comments
                 command = command.trim().toLowerCase();
                 
-                // Single line comments
                 if (command.charAt(0) == '/' && command.charAt(1) == '/') {
                     continue;
                 }
-                
-                // Multi line comments
-                else if (command.charAt(0) == '/' && command.charAt(1) == '*') {
-                    while ((command = in.readLine()) != null) {
-                        int len = command.length();
-                        if (command.charAt(len - 1) == '/' && command.charAt(len - 2) == '*') {
-                            break;
-                        }
-                        continue;
-                    }
-                    continue;
-                }
-                
-                
-                // trim end of line comments away
                 if (command.contains("//")) {
                     command = command.split("//")[0].trim();
                 }
                 return true;
             }
-            
-            // if there's no more commands in the file
             in.close();
         }
         catch (IOException e) {
@@ -71,19 +45,13 @@ public class Parser {
         return false;
     }
     
-    // raed the next command form input
-    // and makes it current command
+
     // called if hasMoreCommands() return true
     public String advance() {
         return command;
     }
     
-    /** return the type of VM command
-     * 
-     * C_ARITHMETIC, C_PUSH, C_POP, C_LABEL, C_GOTO,
-     * C_IF, C_FUNCTION, C_RETURN, C_CALL
-     * 
-     **/    
+    // returns Command Type  
     public String commandType() {
         if (type.equals("push")) {
             type = "C_PUSH";
