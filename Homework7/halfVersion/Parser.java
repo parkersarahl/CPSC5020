@@ -46,7 +46,7 @@ public class Parser {
     }
     
 
-    // called if hasMoreCommands() return true
+    // called if hasMoreCommands() returns true
     public String advance() {
         return command;
     }
@@ -59,36 +59,13 @@ public class Parser {
         else if (type.equals("pop")) {
             type = "C_POP";
         }
-        else if (type.equals("label")) {
-            type = "C_LABEL";
-        }
-        else if (type.equals("goto")) {
-            type = "C_GOTO";
-        }
-        else if (type.equals("if-goto")) {
-            type = "C_IF";
-        }
-        else if (type.equals("function")) {
-            type = "C_FUNCTION";
-        }
-        else if (type.equals("return")) {
-            type = "C_RETURN";
-        }
-        else if (type.equals("call")) {
-            type = "C_CALL";
-        }
         else {
             type = "C_ARITHMETIC";
         }
         return type;
     }
     
-    /** returns first argument of the command
-     * 
-     * if command type is C_ARITHMETIC return command itself
-     * Should not be called if command is C_RETURN
-     * 
-     **/
+    // returns first argument of the command
     public String arg1() {
         if (type.equals("C_ARITHMETIC")) {
             return command;
@@ -98,12 +75,7 @@ public class Parser {
         }
     }
     
-    /** Returns second argument of the command
-     * 
-     * Should be called only if current command is
-     * C_PUSH, C_POP, C_FUNCTION, C_CALL
-     * 
-     **/
+    // Returns second argument of the command
     public String arg2() {
         return command.split(" ")[2];
     }

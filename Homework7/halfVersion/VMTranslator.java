@@ -1,14 +1,3 @@
-/** Translates VM code into Assembly code
- * 
- * Usage: java VMTranslator <file-name/path-to-directory>
- * 
- * Dependencies: Parser.java, CodeWriter.java
- * 
- * - Constructs a Parser from input file
- * - Construct a CodeWriter to generate code in output file
- * - Read VM commands and generate corresponding Assembly code
- * 
- **/
 import java.io.*;
 
 public class VMTranslator {
@@ -17,7 +6,7 @@ public class VMTranslator {
     public CodeWriter code;
     
     // take a filename, create parser and
-    // translate each vm commands in file 
+    // translate each vm commands into asm
     private void parse(File sourceFile) {
         // construct a parser with the file
         parser = new Parser(sourceFile);
@@ -33,24 +22,6 @@ public class VMTranslator {
             }
             else if (ctype.equals("C_PUSH") || ctype.equals("C_POP")) {
                 code.writePushPop(ctype, parser.arg1(), parser.arg2());
-            }
-            else if (ctype.equals("C_LABEL")) {
-                code.writeLabel(parser.arg1());
-            }
-            else if (ctype.equals("C_GOTO")) {
-                code.writeGoto(parser.arg1());
-            }
-            else if (ctype.equals("C_IF")) {
-                code.writeIf(parser.arg1());
-            }
-            else if (ctype.equals("C_CALL")) {
-                code.writeCall(parser.arg1(), parser.arg2());
-            }
-            else if (ctype.equals("C_FUNCTION")) {
-                code.writeFunction(parser.arg1(), parser.arg2());
-            }
-            else if (ctype.equals("C_RETURN")) {
-                code.writeReturn();
             }
         }
     }
