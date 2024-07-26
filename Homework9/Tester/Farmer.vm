@@ -1,15 +1,23 @@
-function Chicken.new 0
+function Farmer.new 0
     push constant 1
     call Memory.alloc 1
     pop pointer 0
     push argument 0
     pop this 0
     push pointer 0
-    call Chicken.draw 1
+    call Farmer.draw 1
     pop temp 0
     push pointer 0
     return
-function Chicken.dispose 0
+function Farmer.draw 0
+    push argument 0
+    pop pointer 0
+    push this 0
+    call Graphics.drawFarmer 1
+    pop temp 0
+    push constant 0
+    return
+function Farmer.dispose 0
     push argument 0
     pop pointer 0
     push pointer 0
@@ -17,11 +25,13 @@ function Chicken.dispose 0
     pop temp 0
     push constant 0
     return
-function Chicken.draw 0
+function Farmer.move 0
     push argument 0
     pop pointer 0
     push this 0
-    call Graphics.drawChicken 1
+    push constant 2
+    sub
+    call Graphics.moveFarmer 1
     pop temp 0
     push constant 0
     return

@@ -1,8 +1,18 @@
 class Main {
-    field ChickenGame game;
+    
     
     function void main(){
-        let game = ChickenGame.new();
+        var ChickenRunGame game;
+        var int key;
+
+        let game = ChickenRunGame.new();
+
+        do Output.moveCursor(10,20);
+        do Output.printString("Welcome to Chicken Run");
+
+
+    
         return;
-    }
+
+}
 }
