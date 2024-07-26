@@ -1,0 +1,8 @@
+class Main {
+    field ChickenGame game;
+    
+    function void main(){
+        let game = ChickenGame.new();
+        return;
+    }
+}

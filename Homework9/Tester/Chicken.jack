@@ -1,0 +1,15 @@
+class Chicken{
+    field int location;
+
+    constructor Chicken new(int x){
+        let location = x;
+
+        do Graphics.drawChicken(location);
+        return this;
+    }
+
+    method void dispose(){
+        do Memory.deAlloc(this);
+        return;
+    }
+}
