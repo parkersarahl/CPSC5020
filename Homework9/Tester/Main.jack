@@ -4,11 +4,25 @@ class Main {
     function void main(){
         var ChickenRunGame game;
         var int key;
+        var boolean play;
+        var int key;
+
 
         let game = ChickenRunGame.new();
 
         do Output.moveCursor(10,20);
         do Output.printString("Welcome to Chicken Run");
+
+        let play = true;
+       
+        while (play){
+            let key = Keyboard.keyPressed();
+            if (key = 32){
+               do game.gamePlay();
+               return false; 
+            }
+        }
+        
 
 
     

@@ -8,8 +8,12 @@ class ChickenRunGame{
         return this;
     }
 
-    method void run(){
-        do Output.printString("Do you Dare?");
-        return;
-    }
-}
+     method boolean gamePlay(){
+         do farmer.moveFarmer();
+         return true; 
+
+
+     }
+        }
+
+    

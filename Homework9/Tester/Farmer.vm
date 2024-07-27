@@ -25,13 +25,51 @@ function Farmer.dispose 0
     pop temp 0
     push constant 0
     return
-function Farmer.move 0
+function Farmer.moveFarmer 1
     push argument 0
     pop pointer 0
+    push constant 0
+    pop local 0
+    push local 0
+    push constant 0
+    eq
+    not
+    if-goto L1
     push this 0
-    push constant 2
-    sub
-    call Graphics.moveFarmer 1
+    call Graphics.moveFarmer1 1
     pop temp 0
     push constant 0
     return
+    goto L0
+label L1
+    push local 0
+    push constant 1
+    eq
+    not
+    if-goto L3
+    push this 0
+    call Graphics.moveFarmer2 1
+    pop temp 0
+    push constant 0
+    return
+    goto L2
+label L3
+    push local 0
+    push constant 2
+    eq
+    not
+    if-goto L5
+    push this 0
+    call Graphics.moveFarmer3 1
+    pop temp 0
+    goto L4
+label L5
+label L4
+    push local 0
+    push constant 1
+    add
+    pop local 0
+    push constant 0
+    return
+label L2
+label L0

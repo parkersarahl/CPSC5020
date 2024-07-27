@@ -10,36 +10,12 @@ function ChickenRunGame.new 0
     pop this 1
     push pointer 0
     return
-function ChickenRunGame.run 0
+function ChickenRunGame.gamePlay 0
     push argument 0
     pop pointer 0
-    push constant 12
-    call String.new 1
-    push constant 68
-    call String.appendChar 2
-    push constant 111
-    call String.appendChar 2
-    push constant 32
-    call String.appendChar 2
-    push constant 121
-    call String.appendChar 2
-    push constant 111
-    call String.appendChar 2
-    push constant 117
-    call String.appendChar 2
-    push constant 32
-    call String.appendChar 2
-    push constant 68
-    call String.appendChar 2
-    push constant 97
-    call String.appendChar 2
-    push constant 114
-    call String.appendChar 2
-    push constant 101
-    call String.appendChar 2
-    push constant 63
-    call String.appendChar 2
-    call Output.printString 1
+    push this 1
+    call Farmer.moveFarmer 1
     pop temp 0
-    push constant 0
+    push constant 1
+    neg
     return

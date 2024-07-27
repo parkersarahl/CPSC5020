@@ -16,4 +16,5 @@ class Chicken{
         do Graphics.drawChicken(location);
         return;
     }
+
 }
