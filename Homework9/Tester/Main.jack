@@ -6,27 +6,26 @@ class Main {
         var int key;
         var boolean play;
         var int key;
-
+        var Chicken intro;
 
         let game = ChickenRunGame.new();
+        let intro = Chicken.new(7300);
 
-        do Output.moveCursor(10,20);
+        do Output.moveCursor(8,20);
         do Output.printString("Welcome to Chicken Run");
-
-        let play = true;
-       
-        while (play){
-            let key = Keyboard.keyPressed();
-            if (key = 32){
-               do game.gamePlay();
-               return false; 
-            }
-        }
+        do Output.moveCursor(10,20);
+        do Output.printString("Press Enter to Start");
+        do intro.draw();
         
 
-
-    
+        let key = Keyboard.keyPressed();
+        let play = true;
+        while (play){
+            do game.gamePlay();
+        }
         return;
+        }
+        }
+       
 
-}
-}
+

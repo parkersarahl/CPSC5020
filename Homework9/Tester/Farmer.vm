@@ -1,5 +1,5 @@
 function Farmer.new 0
-    push constant 1
+    push constant 2
     call Memory.alloc 1
     pop pointer 0
     push argument 0
@@ -25,12 +25,10 @@ function Farmer.dispose 0
     pop temp 0
     push constant 0
     return
-function Farmer.moveFarmer 1
+function Farmer.moveFarmer 0
     push argument 0
     pop pointer 0
-    push constant 0
-    pop local 0
-    push local 0
+    push argument 1
     push constant 0
     eq
     not
@@ -42,7 +40,7 @@ function Farmer.moveFarmer 1
     return
     goto L0
 label L1
-    push local 0
+    push argument 1
     push constant 1
     eq
     not
@@ -54,7 +52,7 @@ label L1
     return
     goto L2
 label L3
-    push local 0
+    push argument 1
     push constant 2
     eq
     not
@@ -62,13 +60,11 @@ label L3
     push this 0
     call Graphics.moveFarmer3 1
     pop temp 0
+    push constant 0
+    return
     goto L4
 label L5
 label L4
-    push local 0
-    push constant 1
-    add
-    pop local 0
     push constant 0
     return
 label L2

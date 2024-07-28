@@ -1,5 +1,7 @@
 class Farmer {
     field int location;
+    field int pos;
+   
     
     constructor Farmer new(int x){
         let location = x;
@@ -18,26 +20,28 @@ class Farmer {
         do Memory.deAlloc(this);
         return;
     }
-
-     method void moveFarmer(){
-         var int pos;
-         let pos = 0;
+    
+     method void moveFarmer(int pos){
 
          if (pos = 0){
              do Graphics.moveFarmer1(location);
              return;
+             
          }
 
-         else {if (pos = 1){
-             do Graphics.moveFarmer2(location);
-             return;
+         else {
+            if (pos = 1)
+            {do Graphics.moveFarmer2(location); 
+            return;   
          }
+         
 
-         else {if (pos = 2){
-             do Graphics.moveFarmer3(location);
+         else {
+            if (pos = 2)
+            {do Graphics.moveFarmer3(location);
+            return;
          }
-        
-         let pos = pos + 1;
+         
          return;
 
  }

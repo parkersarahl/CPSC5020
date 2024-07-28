@@ -1,19 +1,34 @@
 class ChickenRunGame{
     field Chicken player;
-    field Farmer farmer;
-
+    field int pos;
+    field int key;
+    field boolean play;
+    
     constructor ChickenRunGame new(){
-        let player = Chicken.new(7300);
-        let farmer = Farmer.new(7350);
+        
+        let pos = 0;
         return this;
+
     }
 
      method boolean gamePlay(){
-         do farmer.moveFarmer();
-         return true; 
-
-
-     }
+        var Farmer farmer;
+         
+        let key = Keyboard.keyPressed();
+        if (key = 128){
+            do Screen.clearScreen();
+            let farmer = Farmer.new(7355);
+            let player = Chicken.new(7300);
         }
+
+        if (key = 32){
+            do farmer.moveFarmer(pos);
+            let pos = pos + 1;
+        }
+           return true;  
+        }
+        
+     }
+
 
     
