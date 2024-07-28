@@ -21,6 +21,13 @@ class ChickenRunGame{
             let player = Chicken.new(7300);
         }
 
+        if (key = 113){
+            do Screen.clearScreen();
+            do Output.moveCursor(10,20);
+            do Output.printString("Thank you for Playing!");
+            return false;
+        }
+
         if (key = 32){
             do farmer.moveFarmer(pos);
             let pos = pos + 1;

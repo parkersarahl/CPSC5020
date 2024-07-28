@@ -114,11 +114,26 @@ function Main.main 5
     pop local 2
 label L0
     push local 2
+    push constant 1
+    neg
+    eq
     not
     if-goto L1
     push local 0
     call ChickenRunGame.gamePlay 1
     pop temp 0
+    push local 3
+    push constant 113
+    eq
+    not
+    if-goto L3
+    push constant 0
+    pop local 2
+    push constant 0
+    return
+    goto L2
+label L3
+label L2
     goto L0
 label L1
     push constant 0

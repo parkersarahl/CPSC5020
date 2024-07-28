@@ -20,12 +20,20 @@ class Main {
 
         let key = Keyboard.keyPressed();
         let play = true;
-        while (play){
-            do game.gamePlay();
+       
+        while (play = true){
+            do game.gamePlay();  
+            if (key = 113){
+                letplay = false;
+                return;
+            }
         }
+        
+       
+        
         return;
-        }
-        }
+    }
+}
        
 
 
