@@ -5,7 +5,6 @@ class Main {
         var ChickenRunGame game;
         var int key;
         var boolean play;
-        var int key;
         var Chicken intro;
 
         let game = ChickenRunGame.new();
@@ -17,23 +16,28 @@ class Main {
         do Output.printString("Press Enter to Start");
         do intro.draw();
         
-
-        let key = Keyboard.keyPressed();
+        
         let play = true;
-       
         while (play = true){
-            do game.gamePlay();  
-            if (key = 113){
-                let play = false;
+            let key = Keyboard.keyPressed();
+            if (key = 128){
+                do game.gamePlay();
                 return;
             }
+            
         }
         
-       
-        
-        return;
-    }
+        return;       
+            }
 }
+        
+           
+       
+
+        
+        
+    
+
        
 
 

@@ -1,9 +1,9 @@
-function Main.main 5
+function Main.main 4
     call ChickenRunGame.new 0
     pop local 0
     push constant 7300
     call Chicken.new 1
-    pop local 4
+    pop local 3
     push constant 8
     push constant 20
     call Output.moveCursor 2
@@ -104,11 +104,9 @@ function Main.main 5
     call String.appendChar 2
     call Output.printString 1
     pop temp 0
-    push local 4
+    push local 3
     call Chicken.draw 1
     pop temp 0
-    call Keyboard.keyPressed 0
-    pop local 3
     push constant 1
     neg
     pop local 2
@@ -119,16 +117,16 @@ label L0
     eq
     not
     if-goto L1
-    push local 0
-    call ChickenRunGame.gamePlay 1
-    pop temp 0
-    push local 3
-    push constant 113
+    call Keyboard.keyPressed 0
+    pop local 1
+    push local 1
+    push constant 128
     eq
     not
     if-goto L3
-    push constant 0
-    pop local 2
+    push local 0
+    call ChickenRunGame.gamePlay 1
+    pop temp 0
     push constant 0
     return
     goto L2

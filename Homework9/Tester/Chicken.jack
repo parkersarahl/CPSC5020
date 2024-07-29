@@ -13,7 +13,12 @@ class Chicken{
     }
 
     method void draw(){
-        do Graphics.drawChicken(location);
+        do Graphics.drawChicken1(location);
+        return;
+    }
+
+    method void jump(){
+        do Graphics.chickenJump(location);
         return;
     }
 

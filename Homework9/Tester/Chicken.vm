@@ -21,7 +21,15 @@ function Chicken.draw 0
     push argument 0
     pop pointer 0
     push this 0
-    call Graphics.drawChicken 1
+    call Graphics.drawChicken1 1
+    pop temp 0
+    push constant 0
+    return
+function Chicken.jump 0
+    push argument 0
+    pop pointer 0
+    push this 0
+    call Graphics.chickenJump 1
     pop temp 0
     push constant 0
     return
