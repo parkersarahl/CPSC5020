@@ -24,7 +24,7 @@ class Main {
         while (play = true){
             do game.gamePlay();  
             if (key = 113){
-                letplay = false;
+                let play = false;
                 return;
             }
         }

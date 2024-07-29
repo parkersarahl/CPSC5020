@@ -9,6 +9,9 @@ function ChickenRunGame.new 0
 function ChickenRunGame.gamePlay 1
     push argument 0
     pop pointer 0
+    push constant 1
+    neg
+    pop this 3
     call Keyboard.keyPressed 0
     pop this 2
     push this 2
@@ -18,12 +21,20 @@ function ChickenRunGame.gamePlay 1
     if-goto L1
     call Screen.clearScreen 0
     pop temp 0
-    push constant 7355
-    call Farmer.new 1
+    call Farmer.new 0
     pop local 0
     push constant 7300
     call Chicken.new 1
     pop this 0
+label L2
+    push this 3
+    not
+    if-goto L3
+    push local 0
+    call Farmer.moveFarmer 1
+    pop temp 0
+    goto L2
+label L3
     goto L0
 label L1
 label L0
@@ -31,7 +42,7 @@ label L0
     push constant 113
     eq
     not
-    if-goto L3
+    if-goto L5
     call Screen.clearScreen 0
     pop temp 0
     push constant 10
@@ -86,27 +97,8 @@ label L0
     call String.appendChar 2
     call Output.printString 1
     pop temp 0
-    push constant 0
-    return
-    goto L2
-label L3
-label L2
-    push this 2
-    push constant 32
-    eq
-    not
-    if-goto L5
-    push local 0
-    push this 1
-    call Farmer.moveFarmer 2
-    pop temp 0
-    push this 1
-    push constant 1
-    add
-    pop this 1
     goto L4
 label L5
 label L4
-    push constant 1
-    neg
+    push constant 0
     return

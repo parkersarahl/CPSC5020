@@ -1,0 +1,17 @@
+function Main.main 2
+    call Movement.new 0
+    pop local 1
+    push constant 1
+    neg
+    pop local 0
+label L0
+    push local 0
+    not
+    if-goto L1
+    push local 1
+    call Movement.update 1
+    pop temp 0
+    goto L0
+label L1
+    push constant 0
+    return

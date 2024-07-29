@@ -1,590 +1,4 @@
-function Graphics.drawChicken 1
-    push constant 16384
-    push argument 0
-    add
-    pop local 0
-    push local 0
-    push constant 992
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 960
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 928
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 896
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 864
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 832
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 800
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 768
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 736
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 704
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 672
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 640
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 608
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 576
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 544
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 512
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 480
-    sub
-    push constant 16384
-    neg
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 448
-    sub
-    push constant 9088
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 416
-    sub
-    push constant 7040
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 384
-    sub
-    push constant 8064
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 352
-    sub
-    push constant 3840
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 320
-    sub
-    push constant 19456
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 288
-    sub
-    push constant 31744
-    neg
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 256
-    sub
-    push constant 2048
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 224
-    sub
-    push constant 4096
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 192
-    sub
-    push constant 8192
-    neg
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 160
-    sub
-    push constant 8192
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 128
-    sub
-    push constant 8192
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 96
-    sub
-    push constant 8192
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 64
-    sub
-    push constant 20480
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 32
-    sub
-    push constant 30720
-    neg
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 991
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 959
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 927
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 895
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 863
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 831
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 799
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 767
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 735
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 703
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 671
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 639
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 607
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 575
-    sub
-    push constant 3968
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 543
-    sub
-    push constant 4160
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 511
-    sub
-    push constant 9280
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 479
-    sub
-    push constant 16345
-    neg
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 447
-    sub
-    push constant 24600
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 415
-    sub
-    push constant 8256
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 383
-    sub
-    push constant 6528
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 351
-    sub
-    push constant 1924
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 319
-    sub
-    push constant 98
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 287
-    sub
-    push constant 33
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 255
-    sub
-    push constant 16
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 223
-    sub
-    push constant 12
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 191
-    sub
-    push constant 15
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 159
-    sub
-    push constant 8
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 127
-    sub
-    push constant 8
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 95
-    sub
-    push constant 8
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 63
-    sub
-    push constant 20
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 31
-    sub
-    push constant 34
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 1
-    add
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 990
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 958
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 926
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 894
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 862
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 830
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 798
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 766
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 734
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 702
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 670
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 638
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 606
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 574
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 542
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 510
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 478
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 446
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 414
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 382
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 350
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 318
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 286
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 254
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 222
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 190
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 158
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 126
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 94
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 62
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 30
-    sub
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push local 0
-    push constant 2
-    add
-    push constant 0
-    call Memory.poke 2
-    pop temp 0
-    push constant 0
-    return
-function Graphics.drawFarmer 1
+function Graphics.draw 1
     push constant 16384
     push argument 0
     add
@@ -986,7 +400,7 @@ function Graphics.drawFarmer 1
     pop temp 0
     push constant 0
     return
-function Graphics.moveFarmer1 1
+function Graphics.draw2 1
     push constant 16384
     push argument 0
     add
@@ -1408,7 +822,7 @@ function Graphics.moveFarmer1 1
     pop temp 0
     push constant 0
     return
-function Graphics.moveFarmer2 1
+function Graphics.draw3 1
     push constant 16384
     push argument 0
     add
@@ -1872,7 +1286,7 @@ function Graphics.moveFarmer2 1
     pop temp 0
     push constant 0
     return
-function Graphics.moveFarmer3 1
+function Graphics.draw4 1
     push constant 16384
     push argument 0
     add
@@ -2277,7 +1691,7 @@ function Graphics.moveFarmer3 1
     pop temp 0
     push constant 0
     return
-function Graphics.moveFarmer4 1
+function Graphics.draw5 1
     push constant 16384
     push argument 0
     add
@@ -2679,7 +2093,7 @@ function Graphics.moveFarmer4 1
     pop temp 0
     push constant 0
     return
-function Graphics.moveFarmer5 1
+function Graphics.draw6 1
     push constant 16384
     push argument 0
     add
@@ -3101,7 +2515,7 @@ function Graphics.moveFarmer5 1
     pop temp 0
     push constant 0
     return
-function Graphics.moveFarmer6 1
+function Graphics.draw7 1
     push constant 16384
     push argument 0
     add
@@ -3565,7 +2979,7 @@ function Graphics.moveFarmer6 1
     pop temp 0
     push constant 0
     return
-function Graphics.moveFarmer7 1
+function Graphics.draw8 1
     push constant 16384
     push argument 0
     add
@@ -3969,7 +3383,7 @@ function Graphics.moveFarmer7 1
     pop temp 0
     push constant 0
     return
-function Graphics.moveFarmer8 1
+function Graphics.draw9 1
     push constant 16384
     push argument 0
     add

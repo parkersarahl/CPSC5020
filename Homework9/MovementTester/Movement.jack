@@ -1,0 +1,53 @@
+class Movement{
+    field int pos;
+    field int location;
+
+    constructor Movement new(){
+        let location = 7355;
+        let pos = 0;
+        return this;
+    }
+
+    method void update(){
+        if (pos = 0){
+            do Graphics.draw(location);
+            let pos = pos +1;
+        }
+        if (pos = 1){
+            do Graphics.draw2(location);
+            let pos = pos +1;
+        }
+        if (pos = 2){
+            do Graphics.draw3(location);
+            let pos = pos +1;
+        }
+        if (pos = 3){
+            do Graphics.draw4(location);
+            let pos = pos +1;
+        }
+        if (pos = 4){
+            do Graphics.draw5(location);
+            let pos = pos +1;
+        }
+        if (pos = 5){
+            do Graphics.draw6(location);
+            let pos = pos +1;
+        }
+        if (pos = 6){
+            do Graphics.draw7(location);
+            let pos = pos +1;
+        }
+        if (pos = 7){
+            do Graphics.draw8(location);
+            let pos = pos +1;
+        }
+        if (pos = 8){
+            do Graphics.draw9(location);
+            let pos = pos +1;
+        }
+        do Sys.wait(10);
+        let pos = 0;
+        let location = location -1;
+        return;
+    }
+}

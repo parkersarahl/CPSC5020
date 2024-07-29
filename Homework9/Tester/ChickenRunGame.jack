@@ -5,37 +5,34 @@ class ChickenRunGame{
     field boolean play;
     
     constructor ChickenRunGame new(){
-        
         let pos = 0;
         return this;
 
     }
 
-     method boolean gamePlay(){
+     method void gamePlay(){
         var Farmer farmer;
-         
+        let play = true;
         let key = Keyboard.keyPressed();
         if (key = 128){
             do Screen.clearScreen();
-            let farmer = Farmer.new(7355);
+            let farmer = Farmer.new();
             let player = Chicken.new(7300);
+            
+            while(play){
+                do farmer.moveFarmer();
+            }
+            
         }
 
         if (key = 113){
             do Screen.clearScreen();
             do Output.moveCursor(10,20);
             do Output.printString("Thank you for Playing!");
-            return false;
         }
-
-        if (key = 32){
-            do farmer.moveFarmer(pos);
-            let pos = pos + 1;
-        }
-           return true;  
-        }
-        
+        return;
      }
+}
 
 
     

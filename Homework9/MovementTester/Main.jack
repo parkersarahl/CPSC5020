@@ -1,0 +1,16 @@
+class Main{
+    function void main(){
+        var boolean move;
+        var Movement game;
+
+        let game = Movement.new();
+         
+
+        let move = true;
+        while (move){
+            do game.update();
+        }
+       
+        return;
+    }
+}
