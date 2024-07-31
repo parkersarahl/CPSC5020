@@ -112,9 +112,6 @@ function Main.main 4
     pop local 2
 label L0
     push local 2
-    push constant 1
-    neg
-    eq
     not
     if-goto L1
     call Keyboard.keyPressed 0
@@ -135,6 +132,8 @@ label L2
     eq
     not
     if-goto L5
+    push constant 0
+    pop local 2
     call Screen.clearScreen 0
     pop temp 0
     push constant 8

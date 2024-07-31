@@ -15,23 +15,26 @@ class Main {
         do Output.printString("Press Enter to Start");
         do intro.draw();
         
-        
         let play = true;
-        while (play = true){
+        
+        
+       
+        while (play){
             let key = Keyboard.keyPressed();
             if (key = 128){
-                do game.gamePlay();
+            do game.gamePlay();
             }
+        
             if (key = 113){
-                do Screen.clearScreen();
-                do Output.moveCursor(8,20);
-                do Output.printString("Thank you for playing");
+            let play = false;
+            do Screen.clearScreen();
+            do Output.moveCursor(8,20);
+            do Output.printString("Thank you for playing");
             }
         }
-        
-        return;       
-            }
+        return;
 } 
+}
        
 
         

@@ -32,7 +32,6 @@ class Chicken{
             do Graphics.drawChicken1(7300);
         }
         let position = 0;
-        do Sys.wait(10);
         return;
         
     }
