@@ -23,13 +23,8 @@ class ChickenRunGame{
             
         while(play){
             do farmer.moveFarmer();
-            }
-            
-        if (key = 113){
-            do Screen.clearScreen();
-            do Output.moveCursor(10,20);
-            do Output.printString("Thank you for Playing!");
-        }
+            do player.jump();
+       }
         return;
      }
 }

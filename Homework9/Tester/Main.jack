@@ -1,6 +1,5 @@
 class Main {
     
-    
     function void main(){
         var ChickenRunGame game;
         var int key;
@@ -22,16 +21,17 @@ class Main {
             let key = Keyboard.keyPressed();
             if (key = 128){
                 do game.gamePlay();
-                return;
             }
-            
+            if (key = 113){
+                do Screen.clearScreen();
+                do Output.moveCursor(8,20);
+                do Output.printString("Thank you for playing");
+            }
         }
         
         return;       
             }
-}
-        
-           
+} 
        
 
         

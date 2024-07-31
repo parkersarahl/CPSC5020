@@ -1,8 +1,10 @@
 class Chicken{
     field int location;
+    field int position;
 
     constructor Chicken new(int x){
         let location = x;
+        let position = 0;
         do draw();
         return this;
     }
@@ -18,8 +20,21 @@ class Chicken{
     }
 
     method void jump(){
-        do Graphics.chickenJump(location);
+        var int key;
+        let key = Keyboard.keyPressed();
+        do Graphics.drawChicken1(7300);
+        if (key = 32){
+            let position = 1;
+            do Graphics.chickenReset(7300);
+            do Graphics.chickenJump(4804);
+            do Sys.wait(100);
+            do Graphics.chickenReset(4804);
+            do Graphics.drawChicken1(7300);
+        }
+        let position = 0;
+        do Sys.wait(10);
         return;
+        
     }
 
 }
