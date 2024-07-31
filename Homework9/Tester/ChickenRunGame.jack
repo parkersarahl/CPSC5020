@@ -28,8 +28,8 @@ class ChickenRunGame{
                 do farmer.moveFarmer();
                 do player.jump();
             }
-                if (key = 113){
-                    let play = false;
+            if (key = 113){
+                let play = false;
             }
         return;
      }
