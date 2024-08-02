@@ -18,18 +18,22 @@ class ChickenRunGame{
 
         method void gamePlay(){
             while (play){
-                // do Output.moveCursor(4,20);
-                // do Output.printString("Spacebar to make chicken jump");
-                // do Output.moveCursor(6,20);
-                // do Output.printString("q to quit game");
                 do gameCheck();
                 do farmer.moveFarmer();
+                do player.jump();
                 do player.draw();
                 
             }
             return;
         }
-            
+        
+        method void Instruction(){
+            do Output.moveCursor(4,20);
+            do Output.printString("Spacebar to make chicken jump");
+            do Output.moveCursor(6,20);
+            do Output.printString("q to quit game");
+            return;
+        }
         method void gameCheck(){
             var int key;
             let key = Keyboard.keyPressed();

@@ -26,6 +26,9 @@ class Farmer {
              do Graphics.drawFarmer(location);
              let pos = pos +1;
             }
+        if (location = (7298)){
+            let location = 7355;
+        }
         if (pos = 1){
             do Graphics.moveFarmer1(location); 
             let pos = pos +1;   

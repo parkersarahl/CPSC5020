@@ -45,28 +45,23 @@ function Farmer.moveFarmer 0
     goto L0
 label L1
 label L0
-    push this 1
-    push constant 1
+    push this 0
+    push constant 7298
     eq
     not
     if-goto L3
-    push this 0
-    call Graphics.moveFarmer1 1
-    pop temp 0
-    push this 1
-    push constant 1
-    add
-    pop this 1
+    push constant 7355
+    pop this 0
     goto L2
 label L3
 label L2
     push this 1
-    push constant 2
+    push constant 1
     eq
     not
     if-goto L5
     push this 0
-    call Graphics.moveFarmer2 1
+    call Graphics.moveFarmer1 1
     pop temp 0
     push this 1
     push constant 1
@@ -76,12 +71,12 @@ label L2
 label L5
 label L4
     push this 1
-    push constant 3
+    push constant 2
     eq
     not
     if-goto L7
     push this 0
-    call Graphics.moveFarmer3 1
+    call Graphics.moveFarmer2 1
     pop temp 0
     push this 1
     push constant 1
@@ -90,6 +85,21 @@ label L4
     goto L6
 label L7
 label L6
+    push this 1
+    push constant 3
+    eq
+    not
+    if-goto L9
+    push this 0
+    call Graphics.moveFarmer3 1
+    pop temp 0
+    push this 1
+    push constant 1
+    add
+    pop this 1
+    goto L8
+label L9
+label L8
     push constant 10
     call Sys.wait 1
     pop temp 0

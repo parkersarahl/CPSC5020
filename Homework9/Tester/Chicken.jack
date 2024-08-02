@@ -17,6 +17,22 @@ class Chicken{
         do Graphics.drawChicken1(location);
         return;
     }
+
+    method void jump(){
+        var int key;
+        let key = Keyboard.keyPressed();
+        if (key = 32){
+            let position = 1;
+            do Graphics.chickenReset(7300);
+            do Graphics.chickenJump(4804);
+            do Sys.wait(100);
+            do Graphics.chickenReset(4804);
+            do Graphics.drawChicken1(7300);
+        }
+        return;
         
     }
+
+}
+        
 
