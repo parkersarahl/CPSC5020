@@ -23,7 +23,7 @@ class ChickenRunGame{
                 // do Output.moveCursor(6,20);
                 // do Output.printString("q to quit game");
                 do gameCheck();
-                do farmer.draw();
+                do farmer.moveFarmer();
                 do player.draw();
                 
             }

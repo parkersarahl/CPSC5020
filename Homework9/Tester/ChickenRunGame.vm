@@ -27,7 +27,7 @@ label L0
     call ChickenRunGame.gameCheck 1
     pop temp 0
     push this 2
-    call Farmer.draw 1
+    call Farmer.moveFarmer 1
     pop temp 0
     push this 3
     call Chicken.draw 1
