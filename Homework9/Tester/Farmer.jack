@@ -6,7 +6,6 @@ class Farmer {
     constructor Farmer new(){
         let location = 7355;
         let pos = 0;
-        do draw();
         return this;
     }
      
@@ -20,30 +19,5 @@ class Farmer {
         return;
     }
     
-     method void moveFarmer(){
-        
-         if (pos = 0){
-             do Graphics.drawFarmer(location);
-             let pos = pos +1;
-            }
-        if (pos = 1){
-            do Graphics.moveFarmer1(location); 
-            let pos = pos +1;   
-         }
-        
-        if (pos = 2){
-            do Graphics.moveFarmer2(location);
-            let pos = pos + 1;
-         }
-        
-        if (pos = 3){
-            do Graphics.moveFarmer3(location);
-            let pos = pos + 1;
-         }
-         
-         do Sys.wait(10);
-         let pos = 0;
-         let location = location -1;
-         return;
-        }
+     
  }

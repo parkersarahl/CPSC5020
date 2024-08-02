@@ -1,36 +1,49 @@
 class ChickenRunGame{
     field int pos;
     field boolean play;
+    field Farmer farmer;
+    field Chicken player;
+    field int key;
    
     
     constructor ChickenRunGame new(){
         let pos = 0;
         let play = true;
+        let player = Chicken.new(7300);
+        let farmer = Farmer.new();
+        let key = Keyboard.keyPressed();
         return this;
 
     }
 
         method void gamePlay(){
-            var Farmer farmer;
-            var int key; 
-            var Chicken player;
-
-            do Screen.clearScreen();
-            let key = Keyboard.keyPressed();
-            let player = Chicken.new(7300);
-            let farmer = Farmer.new();
-          
-            while(play){
-                do Output.moveCursor(4,20);
-                do Output.printString("Spacebar to make chicken jump");
-                do Output.moveCursor(6,20);
-                do Output.printString("q to quit game");
-                do farmer.moveFarmer();
-                do player.jump();
+            while (play){
+                // do Output.moveCursor(4,20);
+                // do Output.printString("Spacebar to make chicken jump");
+                // do Output.moveCursor(6,20);
+                // do Output.printString("q to quit game");
+                do gameCheck();
+                do farmer.draw();
+                do player.draw();
+                
             }
+            return;
+        }
+            
+        method void gameCheck(){
+            var int key;
+            let key = Keyboard.keyPressed();
             if (key = 113){
                 let play = false;
             }
-        return;
-     }
+            return;
+        }
+
+        method void dispose(){
+            do farmer.dispose();
+            do player.dispose();
+            do Memory.deAlloc(this);
+            return;
+        }
 }
+
