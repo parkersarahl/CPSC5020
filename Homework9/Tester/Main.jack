@@ -9,11 +9,12 @@ class Main {
         let game = ChickenRunGame.new();
         let play = false;
         
+        do Output.moveCursor(6,20);
         do Output.printString("Welcome to Chicken Run");
-        do Output.println();
+        do Output.moveCursor(8, 20);
         do Output.printString("Spacebar to make chicken jump");
-        do Output.println();
-        //do Output.printString("q to quit game");
+        do Output.moveCursor(10,20);
+        do Output.printString("q to quit game");
         
         
         while(~play){
@@ -23,6 +24,8 @@ class Main {
                 }
         }
         do game.gamePlay();
+        do Screen.clearScreen();
+        do Output.printString("Thanks for Playing");
             
         return;
   }
