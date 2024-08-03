@@ -1,0 +1,47 @@
+class Main {
+    
+    function void main(){
+        var ChickenRunGame game;
+        var int key;
+        var boolean play;
+        var Chicken intro;
+
+        let game = ChickenRunGame.new();
+        let play = false;
+        
+        //intro screen
+        do Output.moveCursor(8,20);
+        do Output.printString("Welcome to Chicken Run");
+        do Output.moveCursor(10,20);
+        do Output.printString("Press Enter to Start");
+        
+        //enter to start the game
+        while(~play){
+            let key = Keyboard.keyPressed();
+            if (key = 128) {
+                let play = true;
+                do Screen.clearScreen();
+                }
+        }
+        //Sets gameplay screen with instructions and starts the game
+        do Output.moveCursor(8,20);
+        do Output.printString("Spacebar to make chicken jump");
+         do Output.moveCursor(10,20);
+        do Output.printString("q to quit game");
+        do game.gamePlay();
+        
+        //exit screen
+        do Screen.clearScreen();
+        do Output.moveCursor(10,20);
+        do Output.printString("Thanks for Playing");
+            
+        return;
+  }
+}
+       
+
+        
+        
+    
+
+       

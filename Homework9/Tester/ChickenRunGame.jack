@@ -1,0 +1,52 @@
+class ChickenRunGame{
+    field int pos;
+    field boolean play;
+    field Farmer farmer;
+    field Chicken player;
+    field int key;
+   
+    
+    constructor ChickenRunGame new(){
+        let pos = 0;
+        let play = true;
+        let player = Chicken.new(7300);
+        let farmer = Farmer.new();
+        let key = Keyboard.keyPressed();
+        return this;
+
+    }
+
+        method void gamePlay(){
+            
+            while (play){
+                do gameCheck();
+                do farmer.moveFarmer();
+                do player.jump();
+                do player.draw();
+            }
+            do dispose();
+            return;
+        }
+
+
+        method void gameCheck(){
+            var int key;
+            let key = Keyboard.keyPressed();
+            if (key = 113){
+                let play = false;
+            }
+            return;
+        }
+
+        // method boolean Collision(){
+        //     if (farmer.location = player.)
+        // }
+
+        method void dispose(){
+            do farmer.dispose();
+            do player.dispose();
+            do Memory.deAlloc(this);
+            return;
+        }
+}
+

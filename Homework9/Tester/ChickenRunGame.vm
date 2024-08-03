@@ -1,0 +1,75 @@
+function ChickenRunGame.new 0
+    push constant 5
+    call Memory.alloc 1
+    pop pointer 0
+    push constant 0
+    pop this 0
+    push constant 1
+    neg
+    pop this 1
+    push constant 7300
+    call Chicken.new 1
+    pop this 3
+    call Farmer.new 0
+    pop this 2
+    call Keyboard.keyPressed 0
+    pop this 4
+    push pointer 0
+    return
+function ChickenRunGame.gamePlay 0
+    push argument 0
+    pop pointer 0
+label L0
+    push this 1
+    not
+    if-goto L1
+    push pointer 0
+    call ChickenRunGame.gameCheck 1
+    pop temp 0
+    push this 2
+    call Farmer.moveFarmer 1
+    pop temp 0
+    push this 3
+    call Chicken.jump 1
+    pop temp 0
+    push this 3
+    call Chicken.draw 1
+    pop temp 0
+    goto L0
+label L1
+    push pointer 0
+    call ChickenRunGame.dispose 1
+    pop temp 0
+    push constant 0
+    return
+function ChickenRunGame.gameCheck 1
+    push argument 0
+    pop pointer 0
+    call Keyboard.keyPressed 0
+    pop local 0
+    push local 0
+    push constant 113
+    eq
+    not
+    if-goto L3
+    push constant 0
+    pop this 1
+    goto L2
+label L3
+label L2
+    push constant 0
+    return
+function ChickenRunGame.dispose 0
+    push argument 0
+    pop pointer 0
+    push this 2
+    call Farmer.dispose 1
+    pop temp 0
+    push this 3
+    call Chicken.dispose 1
+    pop temp 0
+    push pointer 0
+    call Memory.deAlloc 1
+    pop temp 0
+    push constant 0
+    return
