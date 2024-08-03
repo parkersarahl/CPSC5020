@@ -17,23 +17,18 @@ class ChickenRunGame{
     }
 
         method void gamePlay(){
+            
             while (play){
                 do gameCheck();
                 do farmer.moveFarmer();
                 do player.jump();
                 do player.draw();
-                
             }
+            do dispose();
             return;
         }
-        
-        method void Instruction(){
-            do Output.moveCursor(4,20);
-            do Output.printString("Spacebar to make chicken jump");
-            do Output.moveCursor(6,20);
-            do Output.printString("q to quit game");
-            return;
-        }
+
+
         method void gameCheck(){
             var int key;
             let key = Keyboard.keyPressed();
@@ -42,6 +37,10 @@ class ChickenRunGame{
             }
             return;
         }
+
+        // method boolean Collision(){
+        //     if (farmer.location = player.)
+        // }
 
         method void dispose(){
             do farmer.dispose();

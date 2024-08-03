@@ -7,23 +7,24 @@ class Main {
         var Chicken intro;
 
         let game = ChickenRunGame.new();
-        let intro = Chicken.new(7300);
-
-        do Output.moveCursor(8,20);
-        do Output.printString("Welcome to Chicken Run");
-        do Output.moveCursor(10,20);
-        do Output.printString("Press Enter to Start");
-        do intro.draw();
+        let play = false;
         
-        do Sys.wait(3000);
+        do Output.printString("Welcome to Chicken Run");
+        do Output.println();
+        do Output.printString("Spacebar to make chicken jump");
+        do Output.println();
+        //do Output.printString("q to quit game");
+        
+        
+        while(~play){
+            let key = Keyboard.keyPressed();
+            if (key = 128) {
+                let play = true;
+                }
+        }
+        do game.gamePlay();
             
-            do Screen.clearScreen();
-            do game.gamePlay();
-           
-
-            
-            do Output.printString("Thank you for playing");
-            return;
+        return;
   }
 }
        
