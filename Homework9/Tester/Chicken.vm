@@ -7,6 +7,9 @@ function Chicken.new 0
     push constant 0
     pop this 1
     push pointer 0
+    call Chicken.draw 1
+    pop temp 0
+    push pointer 0
     return
 function Chicken.dispose 0
     push argument 0

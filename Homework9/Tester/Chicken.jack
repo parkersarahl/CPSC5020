@@ -5,6 +5,7 @@ class Chicken{
     constructor Chicken new(int x){
         let location = x;
         let position = 0;
+        do draw();
         return this;
     }
 
