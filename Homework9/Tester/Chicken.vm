@@ -1,12 +1,10 @@
 function Chicken.new 0
-    push constant 3
+    push constant 2
     call Memory.alloc 1
     pop pointer 0
     push argument 0
     pop this 0
     push constant 0
-    pop this 2
-    push constant 1
     pop this 1
     push pointer 0
     call Chicken.draw 1
@@ -39,7 +37,9 @@ function Chicken.jump 1
     eq
     not
     if-goto L1
-    push constant 0
+    push this 1
+    push constant 1
+    add
     pop this 1
     push this 0
     call Graphics.chickenReset 1
@@ -47,7 +47,7 @@ function Chicken.jump 1
     push constant 4804
     call Graphics.chickenJump 1
     pop temp 0
-    push constant 100
+    push constant 1000
     call Sys.wait 1
     pop temp 0
     push constant 4804
@@ -56,24 +56,13 @@ function Chicken.jump 1
     push this 0
     call Graphics.drawChicken1 1
     pop temp 0
-    push this 2
-    push constant 1
-    add
-    pop this 2
     goto L0
 label L1
 label L0
-    push constant 1
-    pop this 1
     push constant 0
-    return
-function Chicken.getPosition 0
-    push argument 0
-    pop pointer 0
-    push this 1
     return
 function Chicken.getScore 0
     push argument 0
     pop pointer 0
-    push this 2
+    push this 1
     return

@@ -1,13 +1,11 @@
 class Farmer {
     field int location;
     field int pos;
-    field int position;
    
     
     constructor Farmer new(){
         let location = 7355;
         let pos = 0;
-        let position = 0;
         do draw();
         return this;
     }
@@ -23,7 +21,7 @@ class Farmer {
     }
     
      method void moveFarmer(){
-        if (location = (7300)){
+        if (location = (7297)){
             let location = 7355;
         }
     
@@ -45,8 +43,24 @@ class Farmer {
         if (pos = 3){
             do Graphics.moveFarmer3(location);
             let pos = pos + 1;
-        
         }
+        if (pos = 4){
+            do Graphics.moveFarmer4(location);
+            let pos = pos + 1;
+        }
+        if (pos = 5){
+            do Graphics.moveFarmer5(location);
+            let pos = pos + 1;
+        }
+         if (pos = 6){
+            do Graphics.moveFarmer6(location);
+            let pos = pos + 1;
+        }
+         if (pos = 7){
+            do Graphics.moveFarmer7(location);
+            let pos = pos + 1;
+        }
+
     
          do Sys.wait(10);
          let pos = 0;
@@ -54,7 +68,5 @@ class Farmer {
          let location = location -1;
          return;
         }
-    method int getPosition(){
-        return position;
-    }
+  
  }

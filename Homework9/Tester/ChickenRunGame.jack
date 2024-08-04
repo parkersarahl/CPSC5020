@@ -1,17 +1,14 @@
 class ChickenRunGame{
-    field int pos;
     field boolean play;
     field Farmer farmer;
     field Chicken player;
-    field int key;
+    
    
     
     constructor ChickenRunGame new(){
-        let pos = 0;
         let play = true;
         let player = Chicken.new(7300);
         let farmer = Farmer.new();
-        let key = Keyboard.keyPressed();
         return this;
 
     }
@@ -21,7 +18,6 @@ class ChickenRunGame{
             while (play){
                 do player.draw();
                 do gameCheck();
-                do checkCollision();
                 do farmer.moveFarmer();
                 do player.jump();
                 do Output.moveCursor(4, 0);
@@ -46,14 +42,6 @@ class ChickenRunGame{
             }
             
             return;
-        }
-
-        method void checkCollision(){
-            if (farmer.getPosition() = 1 & player.getPosition() = 1)
-            {
-                let play = false; 
-            }
-          return;
         }
 
         method void dispose(){

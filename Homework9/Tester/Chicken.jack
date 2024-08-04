@@ -1,12 +1,10 @@
 class Chicken{
     field int location;
-    field int position;
     field int score;
 
     constructor Chicken new(int x){
         let location = x;
         let score = 0;
-        let position = 1;
         do draw();
         return this;
     }
@@ -25,20 +23,16 @@ class Chicken{
         var int key;
         let key = Keyboard.keyPressed();
         if (key = 32){
-            let position = 0;
+            let score = score + 1;
             do Graphics.chickenReset(location);
             do Graphics.chickenJump(4804);
-            do Sys.wait(100);
+            do Sys.wait(1000);
             do Graphics.chickenReset(4804);
-            do Graphics.drawChicken1(location);
-            let score = score + 1;
+            do Graphics.drawChicken1(location);   
         }
-        let position = 1;
+       
         return;
         
-    }
-    method int getPosition(){
-        return position;
     }
 
     method int getScore(){
