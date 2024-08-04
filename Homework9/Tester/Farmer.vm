@@ -1,11 +1,13 @@
 function Farmer.new 0
-    push constant 2
+    push constant 3
     call Memory.alloc 1
     pop pointer 0
     push constant 7355
     pop this 0
     push constant 0
     pop this 1
+    push constant 0
+    pop this 2
     push pointer 0
     call Farmer.draw 1
     pop temp 0
@@ -30,11 +32,23 @@ function Farmer.dispose 0
 function Farmer.moveFarmer 0
     push argument 0
     pop pointer 0
+    push this 0
+    push constant 7300
+    eq
+    not
+    if-goto L1
+    push constant 1
+    pop this 2
+    push constant 7355
+    pop this 0
+    goto L0
+label L1
+label L0
     push this 1
     push constant 0
     eq
     not
-    if-goto L1
+    if-goto L3
     push this 0
     call Graphics.drawFarmer 1
     pop temp 0
@@ -42,16 +56,6 @@ function Farmer.moveFarmer 0
     push constant 1
     add
     pop this 1
-    goto L0
-label L1
-label L0
-    push this 0
-    push constant 7298
-    eq
-    not
-    if-goto L3
-    push constant 7355
-    pop this 0
     goto L2
 label L3
 label L2
@@ -110,4 +114,9 @@ label L8
     sub
     pop this 0
     push constant 0
+    return
+function Farmer.getPosition 0
+    push argument 0
+    pop pointer 0
+    push this 2
     return

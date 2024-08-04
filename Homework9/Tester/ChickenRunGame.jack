@@ -19,14 +19,18 @@ class ChickenRunGame{
         method void gamePlay(){
             
             while (play){
+                do player.draw();
                 do gameCheck();
+                do checkCollision();
                 do farmer.moveFarmer();
                 do player.jump();
-                do player.draw();
-            }
+                
+                }
             do dispose();
             return;
-        }
+            }
+            
+        
 
 
         method void gameCheck(){
@@ -38,9 +42,13 @@ class ChickenRunGame{
             return;
         }
 
-        // method boolean Collision(){
-        //     if (farmer.location = player.)
-        // }
+        method void checkCollision(){
+            if (farmer.getPosition() = 1 & player.getPosition() = 1)
+            {
+                let play = false; 
+            }
+          return;
+        }
 
         method void dispose(){
             do farmer.dispose();

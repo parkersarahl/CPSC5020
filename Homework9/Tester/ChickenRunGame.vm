@@ -23,17 +23,20 @@ label L0
     push this 1
     not
     if-goto L1
+    push this 3
+    call Chicken.draw 1
+    pop temp 0
     push pointer 0
     call ChickenRunGame.gameCheck 1
+    pop temp 0
+    push pointer 0
+    call ChickenRunGame.checkCollision 1
     pop temp 0
     push this 2
     call Farmer.moveFarmer 1
     pop temp 0
     push this 3
     call Chicken.jump 1
-    pop temp 0
-    push this 3
-    call Chicken.draw 1
     pop temp 0
     goto L0
 label L1
@@ -57,6 +60,27 @@ function ChickenRunGame.gameCheck 1
     goto L2
 label L3
 label L2
+    push constant 0
+    return
+function ChickenRunGame.checkCollision 0
+    push argument 0
+    pop pointer 0
+    push this 2
+    call Farmer.getPosition 1
+    push constant 1
+    eq
+    push this 3
+    call Chicken.getPosition 1
+    and
+    push constant 1
+    eq
+    not
+    if-goto L5
+    push constant 0
+    pop this 1
+    goto L4
+label L5
+label L4
     push constant 0
     return
 function ChickenRunGame.dispose 0
