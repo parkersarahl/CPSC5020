@@ -24,6 +24,9 @@ class ChickenRunGame{
                 do checkCollision();
                 do farmer.moveFarmer();
                 do player.jump();
+                do Output.moveCursor(4, 0);
+                do Output.printString("Score:");
+                do Output.printInt(score());
                 
                 }
             do dispose();
@@ -31,7 +34,9 @@ class ChickenRunGame{
             }
             
         
-
+        method int score(){
+            return player.getScore();
+        }
 
         method void gameCheck(){
             var int key;
@@ -39,6 +44,7 @@ class ChickenRunGame{
             if (key = 113){
                 let play = false;
             }
+            
             return;
         }
 

@@ -37,8 +37,6 @@ function Farmer.moveFarmer 0
     eq
     not
     if-goto L1
-    push constant 1
-    pop this 2
     push constant 7355
     pop this 0
     goto L0

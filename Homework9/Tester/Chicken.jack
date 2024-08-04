@@ -1,9 +1,11 @@
 class Chicken{
     field int location;
     field int position;
+    field int score;
 
     constructor Chicken new(int x){
         let location = x;
+        let score = 0;
         let position = 1;
         do draw();
         return this;
@@ -29,6 +31,7 @@ class Chicken{
             do Sys.wait(100);
             do Graphics.chickenReset(4804);
             do Graphics.drawChicken1(location);
+            let score = score + 1;
         }
         let position = 1;
         return;
@@ -36,6 +39,10 @@ class Chicken{
     }
     method int getPosition(){
         return position;
+    }
+
+    method int getScore(){
+        return score;
     }
 
 }
